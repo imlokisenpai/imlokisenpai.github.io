@@ -1,9 +1,9 @@
 title: Loki senpai
-description: "anime freak"
+description: "just a freak"
 author:
   name: "Lokisenapai"
   email: "ghoul@hi2.in"
-  url: "https://ashishchaudhary.in/hacker-blog"
+  url: ""
 
 baseurl: /
 
@@ -26,6 +26,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-paginate
   - jekyll-sitemap
+  - glitch-jekyll
 
 # Custom variables
 owner : "Loki senpai"
