@@ -2,9 +2,13 @@
 title: My anime watch-list
 published: true
 ---
-##
 
-WATCHED
+![canvas](https://user-images.githubusercontent.com/114554103/197158673-3ed71089-5fb1-46d5-a459-30b0757322c3.png)
+
+
+# [](#header-1)WATCHED
+
+https://user-images.githubusercontent.com/114554103/197158509-7a0edc3a-4d69-4fac-9a34-2a406646b16e.mp4
 
 -     Tokyo ghoul
 -     death note
@@ -106,9 +110,7 @@ WATCHED
 -     ReLife
 -     sasaki and miyano
 
-##
-
-PENDING
+# [](#header-2)PENDING
 
 -     the record of ragnarok
 -     Tsurezure children
@@ -190,9 +192,7 @@ PENDING
 -     Redline *movie*
 -     Ocean Waves *movie*
 
-##
-
-WATCHIING
+# [](#header-3)WATCHIING
 
 - tada never falls in love
 - Beach
