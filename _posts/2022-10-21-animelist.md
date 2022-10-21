@@ -3,6 +3,7 @@ title: My anime watch-list
 published: true
 ---
 ##
+
 WATCHED
 
 -     Tokyo ghoul
@@ -104,3 +105,96 @@ WATCHED
 -     my dress up darling 
 -     ReLife
 -     sasaki and miyano
+
+##
+
+PENDING
+
+-     the record of ragnarok
+-     Tsurezure children
+-     Grand Blue
+-     Kamigami no Asobi
+-     vinland saga
+-     shikimori not just a cutie
+-     Aharen-san wa Hakarenai
+-     the ancient magus' bride
+-     Carnival Phantasm
+-     shingeki no bahamut virgin soul
+-     In/Spectre
+-     castlevania
+-     higehiro
+-     my dress up darling
+-     Amagi Brilliant Park
+-     plastic memory 
+-     Kakegurui
+-     Black Clover
+-     Fire Force
+-     Sword Art Online
+-     The Case Study of Vanitas
+-     One Piece
+-     KILL ME BABY (2012)
+-     Platinum End
+-     My Youth Romantic Comedy Is Wrong, As I Expected
+-     One Punch Man
+-     Fate/stay night
+-     Inari, Konkon, Koi Iroha.
+-     Akame ga Kill!
+-     Hunter x Hunter
+-     Maji de Watashi ni Koi Shinasai!!
+-      Angel Beats!
+-     Recorder and randsell RE
+-     Senryuu Girl (2019 ) 
+-     Anohana
+-     Chivalry of a Failed Knight (2015)
+-     Bakuman!!
+-     Steins;Gate
+-     Fullmetal Alchemist!!
+-     school babysitters
+-     The Daily Life of the Immortal King (2020)
+-     No Matter How I Look at It, It's You Guys' Fault I'm Not Popular!
+-     Tsuredure Children
+-     Wandering Witch: The Journey Of Elaina (2020)
+-     Love Lab
+-     The Detective Is Already Dead
+-     Takt Op Destiny
+-     the irregular at magic high school
+-     Trinity Seven (2014)
+-     assassination classroom
+-     bleach
+-     HELLSING ULTIMATE (2006)
+-     The Great Jahy Will Not Be Defeated!
+-     Ride Your Wave
+-     Paranoia Agent : Mousou Dairinin (2004)
+-     Vampire Knight
+-     Arifureta: From Commonplace to World's Strongest (2019)
+-     Another (2012)
+-     Future diary
+-     One Piece
+-     Amagi Brilliant Park (2014)
+-     High School DxD
+-     Love Tyrant (2017)
+-     Baka To Test (2010)
+-     Kiss Him Not Me! (2016)
+-     tower of god
+-     tamako market
+-     No Matter How I Look at It, It's You Guys' Fault I'm Not Popular!
+-     Chivalry of a Failed Knight (2015)
+-     The Millionaire Detective Balance: UNLIMITED (2020)
+-     We Never Learn
+-     Fire Force
+-     I've Always Liked you
+-     Haikyu!!
+-     Monster Girl Doctor
+-     Hataage ! Kemono Michi
+-     Akira *movie*
+-     Redline *movie*
+-     Ocean Waves *movie*
+
+##
+
+WATCHIING
+
+- tada never falls in love
+- Beach
+- Full Metal Panic!
+
