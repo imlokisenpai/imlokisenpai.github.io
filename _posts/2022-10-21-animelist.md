@@ -2,3 +2,103 @@
 title: My anime watch-list
 published: true
 ---
+##WATCHED
+-     Tokyo ghoul
+-     death note
+-     fullmetal alchemist brotherhood 
+-     attack on titan
+-     My Hero Academia
+-     one punch man
+-     Tokyo revengers
+-     Ouran High School Host Club
+-     Midori Days
+-     GAMERS! (2017)
+-     Kaguya-sama: Love Is War
+-     Re:Zero
+-     demon slayer
+-     Himouto! Umaru-Chan
+-     Blue Spring Ride
+-     Darling in the franxx
+-     seven deadly sins
+-     Noragami 2014
+-     Miss Kobayashi's Dragon Maid
+-     plunderer
+-     Real Girl
+-     No Matter How I Look at It, It's You Guys' Fault I'm Not Popular!
+-     So I'm Spider So What?
+-     Angels of Death (2018)
+-     DEVILMAN: CRYBABY (2018)
+-     If It's for My Daughter, I'd Even Defeat a Demon Lord
+-     Date a live 
+-     Golden Time
+-     idaten jump
+-     classroom of the elite
+-     Don't Toy With Me, Miss Nagatoro
+-     My Teen Romantic Comedy SNAFU
+-     bungou stray dogs
+-     Your Name
+-     Josee, the Tiger and the Fish
+-     A Silent Voice
+-     Yamada and the Seven Witches (2015)
+-     The Devil is a Part-Timer
+-     Devils Line
+-     Ao-chan Can't Study!
+-     Dororo
+-     Toradora!
+-     handa-kun
+-     Say I Love You (2012)
+-     Jujutsu kaisen (2020)
+-     Love, Chunibyo & Other Delusions
+-     Monster Musume: Everyday Life With Monster Girls (2015)
+-     Your lie in April
+-     Haganai
+-     i want to eat your pancreas
+-     Science Fell in Love, So I Tried to Prove It
+-     Weathering With You: Tenki no ko (2019) • Movie
+-     Worldend
+-     The Quintessential Quintuplets 
+-     Dusk Maiden of Amnesia
+-     Uzaki-chan Wants to Hang Out! (2020)
+-     Astra Lost in Space : Kanata no Astra (2019)
+-     Kokoro Connect
+-     The Misfit of Demon King Academy
+-     Akashic Records of Bastard Magic Instructor (2017)
+-     Beyond The Boundary
+-     Horimiya
+-     The Pet Girl of Sakurasou
+-     Hyouka
+-     Tamako Love Story
+-     Charlotte 
+-     The Way of the Househusband
+-     TONIKAWA: Over the Moon for You
+-     Rent-a-Girlfriend 
+-     The God oF High School
+-     Masamune-kun's Revenge
+-     Hello World 2019
+-     Maid Sama! (2010)
+-     Violet Evergarden
+-     Code:Breaker
+-     The Disastrous Life Of Saiki K.
+-     Monsuno
+-     dinosaur king
+-     Beyblade
+-     chimpui
+-     pokemon
+-     ultra B
+-     Gon, The Stone-Age Boy
+-     Luckyman
+-     Yo-Kai Watch
+-     KonoSuba
+-     Haven't You Heard? I'm Sakamoto / Sakamoto desu ga?
+-     komi can’t communicate 
+-     naruto
+-     Code Geass
+-     a whisker away
+-     Trigun
+-     My Senpai Is Annoying
+-     The daily life of immortal king
+-     spy x family
+-     shikimori's not just a cutie
+-     my dress up darling 
+-     ReLife
+-     sasaki and miyano
