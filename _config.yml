@@ -28,6 +28,9 @@ plugins:
   - jekyll-sitemap
   - glitch-jekyll
   - jekyll-admin
+  jekyll_admin:
+  hidden_links:
+    - posts
 
 # Custom variables
 owner : "Loki senpai"
