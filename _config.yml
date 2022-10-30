@@ -27,6 +27,7 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - glitch-jekyll
+  - jekyll-redirect-from
 
 # Custom variables
 owner : "Loki senpai"
