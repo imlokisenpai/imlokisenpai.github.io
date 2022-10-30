@@ -28,6 +28,9 @@ plugins:
   - jekyll-sitemap
   - glitch-jekyll
   - jekyll-redirect-from
+  
+whitelist:
+  - jekyll-redirect-from
 
 # Custom variables
 owner : "Loki senpai"
