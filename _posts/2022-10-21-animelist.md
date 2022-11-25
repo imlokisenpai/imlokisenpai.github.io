@@ -110,6 +110,8 @@ published: true
 -     ReLife
 -     sasaki and miyano
 -     Tada never falls in love
+-     bleach
+-     One Punch Man
 
 # [](#header-2)PENDING
 
@@ -138,7 +140,6 @@ published: true
 -     KILL ME BABY (2012)
 -     Platinum End
 -     My Youth Romantic Comedy Is Wrong, As I Expected
--     One Punch Man
 -     Fate/stay night
 -     Inari, Konkon, Koi Iroha.
 -     Akame ga Kill!
@@ -195,7 +196,5 @@ published: true
 
 # [](#header-3)WATCHIING
 
-- tada never falls in love
-- Beach
 - Full Metal Panic!
 
