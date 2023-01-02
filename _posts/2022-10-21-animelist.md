@@ -1,6 +1,7 @@
 ---
 title: My anime watch-list
 published: true
+redirect_to: https://te.legra.ph/Lokis-Anime-Watch-10-19
 ---
 
 ![canvas](https://user-images.githubusercontent.com/114554103/197158673-3ed71089-5fb1-46d5-a459-30b0757322c3.png)
