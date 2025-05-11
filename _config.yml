@@ -1,37 +1,52 @@
-title: Loki Senpai
-description: "just a freak"
-author:
-  name: "Lokisenapai"
-  email: "ghoul@hi2.in"
-  url: "imlokisenpai.github.io"
+name: Build and Deploy Jekyll Site
 
-baseurl: /
+on:
+  push:
+    branches: ["main"]  # change if your branch is named differently
 
-source: .
-destination: ./_site
-permalink: /:title
-paginate: 3
-paginate_path: /page/:num/
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
-defaults:
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
-future: true
-plugins:
-  - jekyll-seo-tag
-  - jekyll-paginate
-  - jekyll-sitemap
-  - glitch-jekyll
-  - jekyll-redirect-from
-  
-whitelist:
-  - jekyll-redirect-from
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-# Custom variables
-owner : "Loki senpai"
-year : "2022"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Build Jekyll site
+        run: bundle exec jekyll build
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
