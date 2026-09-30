@@ -6,6 +6,7 @@ status: "FIRST DRAFT"
 tags: ["confused","love"]
 excerpt: "One finding beauty, but not home"
 poem: true
+note: "This is not about finding no one beautiful after you. It is about realizing that attraction and love are not the same. I can see beauty in others, but I cannot find the same solace, spark, or connection I found in you."
 ---
 
 Have you ever heard of the great loves?
@@ -82,7 +83,3 @@ But I cannot find beauty
 that feels like you.
 
 And perhaps that is my kind of love.
-
------
-This is not about finding no one beautiful after you. It is about realizing that attraction and love are not the same. I can see beauty in others, but I cannot find the same solace, spark, or connection I found in you.
------
