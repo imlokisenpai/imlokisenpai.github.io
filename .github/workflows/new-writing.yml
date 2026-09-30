@@ -104,51 +104,53 @@ jobs:
           { git ls-files --error-unmatch "$file" >/dev/null 2>&1 || [ -e "$file" ]; } \
             && fail "$file already exists. Use a different title or date."
 
-          ruby -rjson -ryaml -e '
-            # JSON is valid YAML, so a JSON-quoted scalar is the safest way
-            # to write a title: colons, apostrophes, quotation marks and
-            # non-latin characters all survive a round trip. This is the
-            # step that cannot produce the malformed front matter a pasted
-            # file can.
-            title, shelf, day, status, tags, excerpt, poem, body, path = ARGV
+          # A quoted heredoc, not -e '...': bash does no substitution at all,
+          # so an apostrophe in a comment cannot close the program.
+          ruby -rjson -ryaml - "$TITLE" "$SHELF" "$day" "$STATUS" "$TAGS_IN" "$EXCERPT" "$POEM" "$BODY" "$file" <<'RUBY'
+          # JSON is valid YAML, so a JSON-quoted scalar is the safest way
+          # to write a title: colons, apostrophes, quotation marks and
+          # non-latin characters all survive a round trip. This is the
+          # step that cannot produce the malformed front matter a pasted
+          # file can.
+          title, shelf, day, status, tags, excerpt, poem, body, path = ARGV
 
-            # Anything typed into a form can arrive as curly quotes, an
-            # em dash or an accented letter. Ruby reads ENV as binary unless
-            # the runner's locale says otherwise, and json refuses binary —
-            # so retag and scrub everything before it is written.
-            utf8 = ->(s) { s.to_s.dup.force_encoding(Encoding::UTF_8).scrub }
-            title, status, excerpt, body = utf8.(title), utf8.(status), utf8.(excerpt), utf8.(body)
-            tags = utf8.(tags)
+          # Anything typed into a form can arrive as curly quotes, an
+          # em dash or an accented letter. Ruby reads ENV as binary unless
+          # the runner's locale says otherwise, and json refuses binary —
+          # so retag and scrub everything before it is written.
+          utf8 = ->(s) { s.to_s.dup.force_encoding(Encoding::UTF_8).scrub }
+          title, status, excerpt, body = utf8.(title), utf8.(status), utf8.(excerpt), utf8.(body)
+          tags = utf8.(tags)
 
-            # Belt and braces: the shell has already checked this, but a
-            # malformed date line is the one thing that would quietly break
-            # every downstream date calculation.
-            raise "date is not YYYY-MM-DD" unless day =~ /\A\d{4}-\d{2}-\d{2}\z/
+          # Belt and braces: the shell has already checked this, but a
+          # malformed date line is the one thing that would quietly break
+          # every downstream date calculation.
+          raise "date is not YYYY-MM-DD" unless day =~ /\A\d{4}-\d{2}-\d{2}\z/
 
-            out = ["---"]
-            out << "title: #{title.to_json}"
-            out << "date: #{day} 09:00:00 +0000"
-            out << "category: #{shelf.to_json}"
-            out << "status: #{status.to_json}" unless status.strip.empty?
-            out << "excerpt: #{excerpt.to_json}" unless excerpt.strip.empty?
-            words = tags.split(",").map(&:strip).reject(&:empty?).uniq
-            out << "tags: #{words.to_json}" unless words.empty?
-            out << "poem: true" if poem == "true"
-            out << "---" << ""
-            out << (body.strip.empty? ? "<!-- paste the writing here -->" : body.rstrip)
+          out = ["---"]
+          out << "title: #{title.to_json}"
+          out << "date: #{day} 09:00:00 +0000"
+          out << "category: #{shelf.to_json}"
+          out << "status: #{status.to_json}" unless status.strip.empty?
+          out << "excerpt: #{excerpt.to_json}" unless excerpt.strip.empty?
+          words = tags.split(",").map(&:strip).reject(&:empty?).uniq
+          out << "tags: #{words.to_json}" unless words.empty?
+          out << "poem: true" if poem == "true"
+          out << "---" << ""
+          out << (body.strip.empty? ? "<!-- paste the writing here -->" : body.rstrip)
 
-            File.write(path, out.join("\n") + "\n")
+          File.write(path, out.join("\n") + "\n")
 
-            written = File.read(path, encoding: "UTF-8")
-            raise "front matter is not closed" unless written.start_with?("---\n") && written.split(/^---\s*$/).length >= 3
-            fm = YAML.unsafe_load(written.split(/^---\s*$/)[1])
-            raise "title did not parse"    unless fm["title"].is_a?(String) && !fm["title"].empty?
-            raise "title was altered"      unless fm["title"] == title
-            raise "date did not parse"     unless fm["date"]
-            raise "category did not parse" unless fm["category"] == shelf
-            raise "tags did not parse"     unless fm["tags"].nil? || fm["tags"].is_a?(Array)
-            puts "front matter ok: #{fm.keys.join(", ")}"
-          ' -- "$TITLE" "$SHELF" "$day" "$STATUS" "$TAGS_IN" "$EXCERPT" "$POEM" "$BODY" "$file"
+          written = File.read(path, encoding: "UTF-8")
+          raise "front matter is not closed" unless written.start_with?("---\n") && written.split(/^---\s*$/).length >= 3
+          fm = YAML.unsafe_load(written.split(/^---\s*$/)[1])
+          raise "title did not parse"    unless fm["title"].is_a?(String) && !fm["title"].empty?
+          raise "title was altered"      unless fm["title"] == title
+          raise "date did not parse"     unless fm["date"]
+          raise "category did not parse" unless fm["category"] == shelf
+          raise "tags did not parse"     unless fm["tags"].nil? || fm["tags"].is_a?(Array)
+          puts "front matter ok: #{fm.keys.join(", ")}"
+          RUBY
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
