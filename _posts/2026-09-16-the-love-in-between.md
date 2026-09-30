@@ -5,6 +5,7 @@ category: "love"
 status: "FIRST DRAFT"
 tags: ["confused","love"]
 excerpt: "One finding beauty, but not home"
+poem: true
 ---
 
 Have you ever heard of the great loves?
