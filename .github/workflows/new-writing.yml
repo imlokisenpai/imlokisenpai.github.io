@@ -1,0 +1,191 @@
+name: new writing
+
+# Files a new document in the box. Fill in the form on the Actions tab
+# (or `gh workflow run new-writing.yml -f title=... -f shelf=...`), and it
+# writes _posts/<date>-<slug>.md with front matter that cannot be malformed,
+# commits it, and asks deploy.yml to publish.
+#
+# Everything except a title and a shelf is optional. The date defaults to
+# today in UTC, which is the timezone the site is pinned to.
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: "Title, exactly as it should read on the page"
+        required: true
+        type: string
+      shelf:
+        description: "Shelf this is filed under"
+        required: true
+        type: choice
+        options:
+          - love
+          - grief
+          - anger
+          - existential
+          - dreams
+          - unfinished
+          - fragments
+      date:
+        description: "Filing date, YYYY-MM-DD. Blank files it today (UTC)."
+        required: false
+        type: string
+        default: ""
+      status:
+        description: "Optional stamp — RECANTED, NEVER SENT, FIRST DRAFT, UNRESOLVED"
+        required: false
+        type: string
+        default: ""
+      tags:
+        description: "Optional keywords, comma separated"
+        required: false
+        type: string
+        default: ""
+      excerpt:
+        description: "Optional catalogue line. Blank uses the first paragraph."
+        required: false
+        type: string
+        default: ""
+      poem:
+        description: "Keep my line breaks exactly as typed"
+        required: false
+        type: boolean
+        default: false
+      body:
+        description: "Optional — the writing itself. Blank leaves an empty document to paste into on GitHub."
+        required: false
+        type: string
+        default: ""
+
+# contents: write to commit the document, actions: write to trigger deploy.
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  file:
+    name: File the document
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Write the document
+        id: doc
+        env:
+          TITLE: ${{ inputs.title }}
+          SHELF: ${{ inputs.shelf }}
+          DATE_IN: ${{ inputs.date }}
+          STATUS: ${{ inputs.status }}
+          TAGS_IN: ${{ inputs.tags }}
+          EXCERPT: ${{ inputs.excerpt }}
+          POEM: ${{ inputs.poem }}
+          BODY: ${{ inputs.body }}
+        run: |
+          set -euo pipefail
+          fail() { echo "::error::$1"; exit 1; }
+
+          [ -n "${TITLE//[[:space:]]/}" ] || fail "A title is required."
+
+          day="${DATE_IN:-$(date -u +%F)}"
+          printf '%s' "$day" | grep -Eq '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' \
+            || fail "The date must be YYYY-MM-DD, got '$day'."
+          date -u -d "$day" >/dev/null 2>&1 || fail "'$day' is not a real date."
+
+          # Filename slug. Deliberately the same shape as Jekyll's own
+          # slugify, because the filename is what becomes the URL.
+          slug=$(printf '%s' "$TITLE" \
+            | tr '[:upper:]' '[:lower:]' \
+            | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//' \
+            | cut -c1-60 | sed -E 's/-+$//')
+          [ -n "$slug" ] || fail "No usable filename could be made from that title."
+
+          file="_posts/${day}-${slug}.md"
+          { git ls-files --error-unmatch "$file" >/dev/null 2>&1 || [ -e "$file" ]; } \
+            && fail "$file already exists. Use a different title or date."
+
+          ruby -rjson -ryaml -e '
+            # JSON is valid YAML, so a JSON-quoted scalar is the safest way
+            # to write a title: colons, apostrophes, quotation marks and
+            # non-latin characters all survive a round trip. This is the
+            # step that cannot produce the malformed front matter a pasted
+            # file can.
+            title, shelf, day, status, tags, excerpt, poem, body, path = ARGV
+
+            # Anything typed into a form can arrive as curly quotes, an
+            # em dash or an accented letter. Ruby reads ENV as binary unless
+            # the runner's locale says otherwise, and json refuses binary —
+            # so retag and scrub everything before it is written.
+            utf8 = ->(s) { s.to_s.dup.force_encoding(Encoding::UTF_8).scrub }
+            title, status, excerpt, body = utf8.(title), utf8.(status), utf8.(excerpt), utf8.(body)
+            tags = utf8.(tags)
+
+            # Belt and braces: the shell has already checked this, but a
+            # malformed date line is the one thing that would quietly break
+            # every downstream date calculation.
+            raise "date is not YYYY-MM-DD" unless day =~ /\A\d{4}-\d{2}-\d{2}\z/
+
+            out = ["---"]
+            out << "title: #{title.to_json}"
+            out << "date: #{day} 09:00:00 +0000"
+            out << "category: #{shelf.to_json}"
+            out << "status: #{status.to_json}" unless status.strip.empty?
+            out << "excerpt: #{excerpt.to_json}" unless excerpt.strip.empty?
+            words = tags.split(",").map(&:strip).reject(&:empty?).uniq
+            out << "tags: #{words.to_json}" unless words.empty?
+            out << "poem: true" if poem == "true"
+            out << "---" << ""
+            out << (body.strip.empty? ? "<!-- paste the writing here -->" : body.rstrip)
+
+            File.write(path, out.join("\n") + "\n")
+
+            written = File.read(path, encoding: "UTF-8")
+            raise "front matter is not closed" unless written.start_with?("---\n") && written.split(/^---\s*$/).length >= 3
+            fm = YAML.unsafe_load(written.split(/^---\s*$/)[1])
+            raise "title did not parse"    unless fm["title"].is_a?(String) && !fm["title"].empty?
+            raise "title was altered"      unless fm["title"] == title
+            raise "date did not parse"     unless fm["date"]
+            raise "category did not parse" unless fm["category"] == shelf
+            raise "tags did not parse"     unless fm["tags"].nil? || fm["tags"].is_a?(Array)
+            puts "front matter ok: #{fm.keys.join(", ")}"
+          ' -- "$TITLE" "$SHELF" "$day" "$STATUS" "$TAGS_IN" "$EXCERPT" "$POEM" "$BODY" "$file"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$file"
+          git commit -q -m "File ${TITLE} on the ${SHELF} shelf"
+          git push -q
+
+          y=${day%%-*}; rest=${day#*-}; m=${rest%%-*}; d=${rest#*-}
+          {
+            echo "file=$file"
+            echo "day=$day"
+            echo "slug=$slug"
+            echo "url=/writings/$y/$m/$d/$slug/"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # A push made with the default token does not start other
+          # workflows, so deploy.yml is dispatched by hand.
+          gh workflow run deploy.yml --ref main
+
+      - name: Summary
+        env:
+          TITLE: ${{ inputs.title }}
+          FILE: ${{ steps.doc.outputs.file }}
+          URL_PATH: ${{ steps.doc.outputs.url }}
+        run: |
+          {
+            echo "## Filed: $TITLE"
+            echo
+            echo '```markdown'
+            cat "$FILE"
+            echo '```'
+            echo
+            echo "- paste the writing into [\`$FILE\`](https://github.com/${{ github.repository }}/edit/main/$FILE)"
+            echo "- it will be published at [imlokisenpai.github.io/restless-soul$URL_PATH](https://imlokisenpai.github.io/restless-soul$URL_PATH)"
+            echo "- [re-run the deploy](https://github.com/${{ github.repository }}/actions/workflows/deploy.yml)"
+          } >> "$GITHUB_STEP_SUMMARY"
