@@ -1,0 +1,26 @@
+---
+layout: default
+---
+<article class="sheet">
+
+  <header class="sheet__head">
+    <p class="sheet__eyebrow meta">
+      {%- if page.archive_note -%}{{ page.archive_note }}{%- else -%}document{%- endif -%}
+    </p>
+    <h1 class="sheet__title">{{ page.title }}</h1>
+    {%- if page.subtitle %}
+    <p class="sheet__subtitle">{{ page.subtitle }}</p>
+    {%- endif %}
+    {%- if page.description %}
+    <p class="sheet__lede">{{ page.description | strip_html | normalize_whitespace }}</p>
+    {%- endif %}
+    {%- if page.handwritten %}
+    <p class="handwritten sheet__hand">{{ page.handwritten }}</p>
+    {%- endif %}
+  </header>
+
+  <div class="sheet__body prose{% if page.poem %} prose--verse{% endif %}">
+    {{ content }}
+  </div>
+
+</article>

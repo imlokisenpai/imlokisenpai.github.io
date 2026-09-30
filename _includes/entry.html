@@ -1,0 +1,69 @@
+{%- comment -%}
+  One row of the catalogue. Used by the archive, category and tag pages.
+
+  Parameters:
+    post  — required, the document to render
+    tone  — "plate" for a heavier manuscript sheet; plain rows otherwise
+{%- endcomment -%}
+
+{%- assign entry = include.post -%}
+{%- assign cat_slug = entry.category | default: "fragments" -%}
+
+{%- comment -%} display name + mood for this shelf {%- endcomment -%}
+{%- assign cat_name = cat_slug | capitalize -%}
+{%- assign cat_mood = "" -%}
+{%- for c in site.data.categories -%}
+  {%- if c.slug == cat_slug -%}
+    {%- assign cat_name = c.name -%}
+    {%- assign cat_mood = c.mood -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- include archive_number.html post=entry -%}
+{%- include shelf_url.html slug=cat_slug -%}
+
+<article class="entry{% if include.tone == 'plate' %} entry--plate{% endif %}"
+         data-category="{{ cat_slug }}"
+         {%- if cat_mood %} data-mood="{{ cat_mood }}"{% endif %}
+         data-status="{{ entry.status | default: 'none' | downcase | replace: ' ', '-' }}"
+         data-year="{{ entry.date | date: '%Y' }}">
+
+  <div class="entry__gutter">
+    {%- comment -%} decorative rule that the number sits on {%- endcomment -%}
+    <span class="entry__hairline" aria-hidden="true"></span>
+    <span class="entry__no meta">ARCHIVE {{ archive_number }}</span>
+    <span class="entry__seal" aria-hidden="true">{% include seal.html %}</span>
+  </div>
+
+  <div class="entry__body">
+    <h3 class="entry__title">
+      <a href="{{ entry.url | relative_url }}">{{ entry.title | escape }}</a>
+    </h3>
+
+    <p class="entry__meta meta">
+      {%- if has_shelf -%}
+      <a class="entry__cat" href="{{ shelf_url | relative_url }}">{{ cat_name | upcase }}</a>
+      {%- else -%}
+      <span class="entry__cat">{{ cat_name | upcase }}</span>
+      {%- endif -%}
+      <span class="entry__dot" aria-hidden="true">&middot;</span>
+      <time datetime="{{ entry.date | date_to_xmlschema }}">{{ entry.date | date: "%d.%m.%Y" }}</time>
+      {%- if entry.status %}
+      <span class="entry__dot" aria-hidden="true">&middot;</span>
+      <span class="entry__status">{{ entry.status | upcase }}</span>
+      {%- endif %}
+    </p>
+
+    <p class="entry__excerpt">{{ entry.excerpt | strip_html | normalize_whitespace | truncate: 240 }}</p>
+
+    {%- if entry.tags and entry.tags.size > 0 %}
+    <p class="entry__tags meta">
+      <span class="entry__tags-label">tags</span>
+      {%- for tag in entry.tags -%}
+      <a href="{{ '/tags/' | relative_url }}#tag-{{ tag | slugify }}">{{ tag | slugify }}</a>{% unless forloop.last %}<span aria-hidden="true">,</span>{% endunless %}
+      {%- endfor -%}
+    </p>
+    {%- endif %}
+  </div>
+
+</article>

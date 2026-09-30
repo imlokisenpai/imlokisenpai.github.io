@@ -1,0 +1,35 @@
+{%- assign total = site.posts | size -%}
+<footer class="colophon" role="contentinfo">
+  <div class="colophon__inner">
+
+    <div class="colophon__seal" aria-hidden="true">
+      {% include seal.html %}
+    </div>
+
+    <div class="colophon__body">
+      <p class="colophon__line">
+        <span class="meta">BOX</span> no. {{ site.data.site.archive_box }} &middot;
+        <span class="meta">ENTRIES</span> {{ total }} &middot;
+        <span class="meta">CONDITION</span> {{ site.data.site.warning | strip_newlines | truncate: 46 }}
+      </p>
+
+      <p class="colophon__line colophon__line--dim">
+        Assembled with Jekyll. No names on the spine. Nothing here was written to be published
+        and everything here is left as found.
+      </p>
+
+      <p class="colophon__links">
+        <a href="{{ '/archive/' | relative_url }}">catalogue</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="{{ '/categories/' | relative_url }}">shelves</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="{{ '/colophon/' | relative_url }}">colophon</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="{{ '/feed.xml' | relative_url }}">rss</a>
+        <span aria-hidden="true">&middot;</span>
+        <a href="https://jekyllrb.com/" rel="noopener noreferrer">jekyll</a>
+      </p>
+    </div>
+
+  </div>
+</footer>

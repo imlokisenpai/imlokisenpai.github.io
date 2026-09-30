@@ -1,0 +1,51 @@
+# The seven shelves of the archive.
+#
+# Categories are still generated from the front matter of the posts —
+# this file only supplies the display name, the shelf note and the
+# mood used for the small per-category visual variation. A category
+# written into a post that is not listed here still works; it simply
+# falls back to the default name and mood.
+#
+# `mood` maps to a block in _sass/_moods.scss.
+
+- slug: love
+  name: Love
+  mood: love
+  note: Sent, or never sent. The distinction was never made clear.
+  mark: "a pressed flower, four years old"
+
+- slug: grief
+  name: Grief
+  mood: grief
+  note: Filed late. Some of these are still wet.
+  mark: "one chair, kept"
+
+- slug: anger
+  name: Anger
+  mood: anger
+  note: Certain passages removed at the author's instruction.
+  mark: "a struck match, then nothing"
+
+- slug: existential
+  name: Existential
+  mood: existential
+  note: Questions filed without answers. Answers filed without questions.
+  mark: "a diagram of a circle that closes nowhere"
+
+- slug: dreams
+  name: Dreams
+  mood: dreams
+  note: Transcribed on waking. Accuracy not guaranteed.
+  mark: "water in the shape of a room"
+
+- slug: unfinished
+  name: Unfinished
+  mood: unfinished
+  note: Left as found. Do not complete these.
+  mark: "a sentence that stops mid-breath"
+
+- slug: fragments
+  name: Fragments
+  mood: fragments
+  note: Recovered from margins, notebooks, backs of receipts.
+  mark: "half a page, torn"

@@ -1,0 +1,230 @@
+/* ==========================================================================
+   cover — the box, opened
+   ========================================================================== */
+
+.cover {
+  position: relative;
+  min-height: 68vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2.5rem, 9vh, 5rem) 0 clamp(2rem, 6vh, 3.5rem);
+  isolation: isolate;
+}
+
+/* -- the carton ---------------------------------------------------------- */
+/* A shipping carton label, stamped crooked. It is the only straight
+   object on the page and it is barely there. */
+.cover__carton {
+  position: absolute;
+  top: clamp(0.5rem, 3vh, 2rem);
+  right: 0;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--brown-dim);
+  font-family: var(--mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brown-text);
+  transform: rotate(-1.4deg);
+  opacity: 0.75;
+}
+
+.cover__carton-stamp { white-space: nowrap; }
+
+/* -- the mark ------------------------------------------------------------ */
+.cover__mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  width: min(78vw, 34rem);
+  color: var(--brown);
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.cover__mark .seal { width: 100%; height: auto; }
+
+.cover__eyebrow { margin-bottom: 1.5rem; color: var(--brown-text); }
+
+.cover__title {
+  font-size: clamp(2.1rem, 11vw, 5.25rem);
+  line-height: 0.98;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  text-shadow: 0 0 34px rgba(239, 230, 211, 0.07);
+  /* faded ink: a hair of blur keeps it from looking typeset */
+  text-shadow: 0 0 1px rgba(239, 230, 211, 0.25);
+}
+
+.cover__sub {
+  margin-top: 1.1rem;
+  max-width: 30ch;
+  font-style: italic;
+  font-size: clamp(1rem, 3.4vw, 1.2rem);
+  line-height: 1.5;
+  color: var(--ink-70);
+}
+
+.cover__rule {
+  position: relative;
+  margin: 2.25rem 0 1.75rem;
+  height: 1px;
+  max-width: 22rem;
+  background: linear-gradient(to right, var(--brown-dim), transparent);
+}
+
+.cover__rule span {
+  position: absolute;
+  top: -3px;
+  left: 45%;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--brown);
+  transform: rotate(45deg);
+}
+
+.cover__hero {
+  font-size: clamp(1.15rem, 4.6vw, 1.6rem);
+  line-height: 1.45;
+  color: var(--ivory);
+  max-width: 24ch;
+  font-style: italic;
+}
+
+.cover__action { margin-top: 2.25rem; }
+
+.cover__warning {
+  margin-top: 1.5rem;
+  max-width: 42ch;
+  color: var(--brown-text);
+  text-transform: none;
+  letter-spacing: 0.06em;
+}
+
+/* -- the primary action -------------------------------------------------- */
+/* Typed, stamped, slightly misregistered. Hover nudges the arrow only. */
+.enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 1.4rem;
+  border: 1px solid var(--brown);
+  background: linear-gradient(180deg, rgba(216, 204, 178, 0.04), transparent);
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  transition: border-color var(--quick) var(--ease), background var(--quick) var(--ease);
+}
+
+.enter:hover,
+.enter:focus-visible {
+  border-color: var(--crimson-lit);
+  background: linear-gradient(180deg, rgba(125, 33, 38, 0.14), transparent);
+}
+
+.enter__arrow {
+  transition: transform var(--quick) var(--ease);
+  color: var(--brown);
+}
+
+.enter:hover .enter__arrow,
+.enter:focus-visible .enter__arrow {
+  transform: translateX(4px);
+  color: var(--ivory);
+}
+
+.enter--small { padding: 0.65rem 1.1rem; }
+
+/* -- the recovered fragment ---------------------------------------------- */
+/* A torn sheet of paper, not a card. Irregular edges, fibre grain, a
+   shadow deep enough to lift it off the ground. */
+.fragment {
+  margin: clamp(2.5rem, 7vh, 4rem) 0 0;
+  padding-left: clamp(0.5rem, 4vw, 2.5rem);
+}
+
+.fragment__paper {
+  position: relative;
+  max-width: 30rem;
+  padding: 1.75rem 1.6rem 2rem;
+  background:
+    linear-gradient(178deg, rgba(216, 204, 178, 0.09), rgba(216, 204, 178, 0.045) 60%, transparent),
+    var(--charcoal);
+  box-shadow:
+    0 1px 0 rgba(239, 230, 211, 0.04) inset,
+    0 18px 40px -24px rgba(0, 0, 0, 0.9);
+  transform: rotate(-0.7deg);
+  /* torn left edge */
+  clip-path: polygon(
+    0.6% 0%, 2% 3%, 0.8% 7%, 1.9% 12%, 0.5% 17%, 1.7% 23%, 0.7% 28%,
+    1.8% 34%, 0.6% 39%, 1.6% 45%, 0.8% 51%, 1.9% 57%, 0.5% 63%, 1.7% 69%,
+    0.7% 75%, 1.8% 81%, 0.6% 87%, 1.6% 93%, 0.9% 100%,
+    100% 100%, 100% 0%
+  );
+}
+
+.fragment__paper::after {
+  /* fibre — the vertical grain of pressed paper */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--fibre);
+  background-size: 220px 220px;
+  opacity: 0.06;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.fragment__no { color: var(--brown-text); margin-bottom: 0.9rem; }
+
+.fragment__line {
+  font-size: 1.0625rem;
+  line-height: 1.72;
+  color: var(--parchment);
+  font-style: italic;
+  text-indent: -0.4em;
+}
+
+.fragment__sig { margin-top: 1rem; font-size: 0.9rem; color: var(--ink-45); }
+
+/* -- contents strip ------------------------------------------------------ */
+.index-strip {
+  margin-top: clamp(3rem, 9vh, 5rem);
+  padding-top: 1.5rem;
+  border-top: var(--rule);
+}
+
+.index-strip__title { margin-bottom: 1.25rem; }
+
+.index-strip__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 1rem;
+}
+
+.index-strip__stats dt {
+  font-family: var(--mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brown-text);
+}
+
+.index-strip__stats dd {
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: var(--ivory);
+  margin-top: 0.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* -- recent ------------------------------------------------------------- */
+.shelf-preview { margin-top: clamp(3rem, 9vh, 5rem); }
+
+.shelf-preview__title { margin-bottom: 1.5rem; }

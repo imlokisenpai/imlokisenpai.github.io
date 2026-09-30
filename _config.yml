@@ -1,0 +1,60 @@
+# ==============================================================
+#  RESTLESS SOUL — site configuration
+#  Edit this file, commit, done. CI builds the rest.
+# ==============================================================
+
+# --- Identity ----------------------------------------------------
+title: RESTLESS SOUL
+tagline: Fragments from a mind that never learned to be quiet.
+description: >-
+  A private literary archive: poems, monologues, letters and unfinished
+  thoughts, recovered from a box of manuscripts and filed by number.
+
+author:
+  name: the archivist
+  # Deliberately not attributed. The archive does not name who wrote it.
+  email:
+
+# --- Build -------------------------------------------------------
+# Pinned so the site builds identically on a laptop in any timezone and in
+# the UTC container GitHub Actions uses. Without this, a post written at
+# 23:00 gets a different URL on every machine.
+timezone: UTC
+
+markdown: kramdown
+highlighter: rouge
+
+sass:
+  style: compressed
+  sass_dir: _sass
+
+# --- Archive structure -------------------------------------------
+# Categories and tags are generated from the front matter of the posts.
+# Jekyll 4 has no built-in category/tag page generators, so the seven
+# shelf pages live in _pages/category/ and the tag index anchors its
+# sections. Both are ordinary Liquid over site.posts / site.tags.
+permalink: /writings/:year/:month/:day/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - README.md
+  - .github
+  - .jekyll-cache
+
+# Jekyll ignores any directory beginning with an underscore unless it is a
+# known special directory, so the standalone pages are opted back in here.
+include:
+  - _pages
+
+# --- Feed --------------------------------------------------------
+feed:
+  path: feed.xml

@@ -1,0 +1,21 @@
+{%- comment -%}
+  Resolves the shelf page for a category slug, if the archive has one.
+
+  Jekyll 4 has no category page generator and GitHub Pages runs no plugins,
+  so a shelf page only exists if there is a file for it in
+  _pages/category/. A post filed under a category that is not declared in
+  _data/categories.yml must therefore render as plain text rather than as a
+  link to nowhere.
+
+  Usage:  {% include shelf_url.html slug=cat_slug %}
+  Sets:   shelf_url   the page url, whether or not it exists
+         has_shelf   true when the page exists
+{%- endcomment -%}
+
+{%- assign shelf_url = '/category/' | append: include.slug | append: '/' -%}
+{%- assign has_shelf = false -%}
+{%- for p in site.pages -%}
+  {%- if p.url == shelf_url -%}
+    {%- assign has_shelf = true -%}
+  {%- endif -%}
+{%- endfor -%}

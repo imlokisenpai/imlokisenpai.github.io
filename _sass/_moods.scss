@@ -1,0 +1,163 @@
+/* ==========================================================================
+   moods — seven small variations on one identity
+   Each shelf shifts the paper tone, the ink and one mark. Nothing here
+   changes the structure: the archive is still the same box, opened
+   differently depending on what was inside.
+   ========================================================================== */
+
+/* -- love ---------------------------------------------------------------- */
+[data-mood="love"] .document__body,
+[data-mood="love"] .prose--verse p {
+  color: var(--mood-paper);
+}
+
+[data-mood="love"] .document__title {
+  letter-spacing: 0.01em;
+  font-style: italic;
+}
+
+[data-mood="love"] .document__rule,
+[data-mood="love"] .document__facts dt {
+  color: var(--mood-accent);
+  border-color: var(--mood-accent);
+}
+
+[data-mood="love"] .document__rule { background: linear-gradient(to right, var(--mood-accent), transparent); }
+
+/* a pressed flower, four years old: one faint mark, top corner */
+[data-mood="love"] .document__head::after {
+  content: "";
+  position: absolute;
+  top: clamp(1.25rem, 4vh, 2rem);
+  right: 0;
+  width: 2.25rem;
+  height: 3rem;
+  border: 1px solid var(--mood-mark);
+  border-radius: 50% 50% 46% 54% / 60% 55% 45% 40%;
+  opacity: 0.18;
+  transform: rotate(14deg);
+  pointer-events: none;
+}
+
+/* -- grief --------------------------------------------------------------- */
+[data-mood="grief"] .prose { line-height: 1.95; color: var(--mood-paper); }
+
+[data-mood="grief"] .prose--verse p { margin-bottom: 2em; }
+
+[data-mood="grief"] .document__title { color: var(--ink-70); font-weight: 400; }
+
+[data-mood="grief"] .entry__excerpt,
+[data-mood="grief"] .entry__title { color: var(--ink-70); }
+
+/* one chair, kept: the empty space above the text */
+[data-mood="grief"] .document__head { padding-bottom: 2.5rem; }
+
+[data-mood="grief"] .document__stamp { opacity: 0.22; }
+
+/* -- anger --------------------------------------------------------------- */
+[data-mood="anger"] .document__no,
+[data-mood="anger"] .entry__no { color: var(--crimson-lit); }
+
+[data-mood="anger"] .document__rule {
+  background: linear-gradient(to right, var(--crimson), transparent);
+  height: 1px;
+}
+
+[data-mood="anger"] .prose { color: var(--mood-paper); }
+
+[data-mood="anger"] .prose em { font-style: normal; letter-spacing: 0.02em; }
+
+/* scratched ink: two hairlines at a shallow angle across the sheet */
+[data-mood="anger"] .document__body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(96deg, transparent 0 12%, var(--ink-06) 12.1% 12.25%, transparent 12.4% 100%),
+    linear-gradient(88deg, transparent 0 74%, var(--ink-06) 74.1% 74.3%, transparent 74.5% 100%);
+}
+
+.document__body { position: relative; }
+
+/* -- existential --------------------------------------------------------- */
+[data-mood="existential"] .document__body { max-width: 32rem; }
+
+[data-mood="existential"] .prose { line-height: 1.9; }
+
+[data-mood="existential"] .document__title { letter-spacing: 0.06em; }
+
+/* a diagram that closes nowhere: annotation ticks down the margin */
+[data-mood="existential"] .document__body::after {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  right: 0;
+  width: 5.25rem;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--ink-12) 0 1px,
+    transparent 1px 14px
+  );
+  background-size: 1px 100%;
+  background-repeat: repeat-y;
+  background-position: right top;
+  opacity: 0.5;
+  mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+}
+
+/* -- dreams -------------------------------------------------------------- */
+[data-mood="dreams"] .document__title {
+  text-shadow: 0 0 26px rgba(160, 172, 196, 0.16);
+  letter-spacing: 0.05em;
+}
+
+[data-mood="dreams"] .prose { color: var(--mood-paper); }
+
+[data-mood="dreams"] .document__body {
+  background: linear-gradient(180deg, rgba(142, 147, 160, 0.07), transparent 60%);
+  padding: 1.5rem 1.25rem;
+  border: 1px solid rgba(142, 147, 160, 0.12);
+}
+
+/* -- unfinished ---------------------------------------------------------- */
+[data-mood="unfinished"] .document__rule {
+  background: repeating-linear-gradient(to right, var(--brown-dim) 0 6px, transparent 6px 12px);
+}
+
+[data-mood="unfinished"] .document__body { padding-bottom: 3rem; }
+
+/* a sentence that stops mid-breath */
+[data-mood="unfinished"] .document__body::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.75rem;
+  width: 2ch;
+  height: 1.1em;
+  border-right: 1px solid var(--crimson);
+  opacity: 0.6;
+  animation: caret 1.6s steps(1) infinite;
+}
+
+[data-mood="unfinished"] .status { border-style: dashed; }
+
+/* -- fragments ----------------------------------------------------------- */
+[data-mood="fragments"] .prose { font-size: 1rem; }
+
+[data-mood="fragments"] .document__body {
+  border-left: 1px solid var(--ink-12);
+  padding-left: 1.25rem;
+  /* torn along the foot, the way a page tears out of a notebook */
+  clip-path: polygon(
+    0 0, 100% 0, 100% 97.4%, 94% 98.1%, 88% 97.2%, 81% 98.4%,
+    74% 97.6%, 67% 98.6%, 60% 97.4%, 53% 98.2%, 46% 97.5%,
+    39% 98.5%, 32% 97.3%, 25% 98.3%, 18% 97.6%, 11% 98.4%,
+    5% 97.5%, 0 98.6%
+  );
+}
+
+[data-mood="fragments"] .entry__excerpt { font-style: normal; }

@@ -1,0 +1,8 @@
+# Strings the templates need, kept out of _config.yml so the layout of the
+# site can be edited in one place. `title` and `tagline` are NOT here —
+# they live in _config.yml, next to the rest of the identity.
+
+hero: Some thoughts were never meant to be found.
+archive_box: "1"
+warning: >-
+  Unsorted. Unedited. Some entries are incomplete and will stay that way.

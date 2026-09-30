@@ -1,0 +1,81 @@
+/* ==========================================================================
+   motion
+   Four effects in the whole site: a page fade, a paper settle, an ink
+   brighten, and a caret on unfinished documents. Everything is opt-out via
+   prefers-reduced-motion, which also disables scroll behaviour.
+   ========================================================================== */
+
+@keyframes page-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes paper-settle {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes ink-brighten {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes seal-breathe {
+  0%, 100% { opacity: 0.28; }
+  50%      { opacity: 0.16; }
+}
+
+@keyframes caret {
+  0%, 49%   { opacity: 0.6; }
+  50%, 100% { opacity: 0; }
+}
+
+body {
+  animation: page-in var(--slow) var(--ease) both;
+}
+
+/* The writing fades in after the page, so the text is the last thing to
+   arrive. Very slight vertical settle — enough to read as paper. */
+.document__body,
+.sheet__body {
+  animation: paper-settle 900ms var(--ease) 120ms both;
+}
+
+.document__no,
+.document__facts,
+.document__tags {
+  animation: ink-brighten 700ms var(--ease) 60ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .document__body,
+  .sheet__body,
+  .document__no,
+  .document__facts,
+  .document__tags { animation: none; opacity: 1; }
+}
+
+/* The same block, for readers who would rather not have the texture. */
+@media (prefers-contrast: more) {
+  :root {
+    --parchment: #f2ebdc;
+    --ivory: #ffffff;
+    --ivory-dim: #d6cdb8;
+    --ink-45: #a89c85;
+    --ink-12: rgba(216, 204, 178, 0.4);
+    --ink-06: rgba(216, 204, 178, 0.28);
+    --grain-opacity: 0;
+  }
+
+  .grain { display: none; }
+}

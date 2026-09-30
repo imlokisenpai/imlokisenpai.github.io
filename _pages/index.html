@@ -1,0 +1,96 @@
+---
+layout: default
+permalink: /
+body_class: page--cover
+description: >-
+  RESTLESS SOUL — fragments from a mind that never learned to be quiet.
+  A private literary archive: poems, monologues, letters and unfinished thoughts.
+---
+{%- assign total = site.posts | size -%}
+
+<section class="cover">
+
+  {%- comment -%} the box: a worn carton, addressed and worn at the corners {%- endcomment -%}
+  <div class="cover__carton" aria-hidden="true">
+    <span class="cover__carton-stamp">no. {{ site.data.site.archive_box }}</span>
+  </div>
+
+  <div class="cover__mark" aria-hidden="true">
+    {% include seal.html %}
+  </div>
+
+  <p class="cover__eyebrow meta">private archive &middot; recovered &middot; unsorted</p>
+
+  <h1 class="cover__title">{{ site.title }}</h1>
+
+  <p class="cover__sub">{{ site.tagline }}</p>
+
+  <div class="cover__rule" aria-hidden="true"><span></span></div>
+
+  <p class="cover__hero">{{ site.data.site.hero }}</p>
+
+  <p class="cover__action">
+    <a class="enter" href="{{ '/archive/' | relative_url }}">
+      enter the archive
+      <span class="enter__arrow" aria-hidden="true">&rarr;</span>
+    </a>
+  </p>
+
+  <p class="cover__warning meta">{{ site.data.site.warning }}</p>
+
+</section>
+
+{%- comment -%} a fragment of manuscript, deliberately not a blog preview card {%- endcomment -%}
+<aside class="fragment" aria-label="excerpt of a recovered manuscript">
+  <div class="fragment__paper">
+    <p class="fragment__no meta">ARCHIVE 00&hellip;</p>
+    <p class="fragment__line">
+      &ldquo;I keep the letters I do not send because deleting them would be
+      an answer, and I have not made an answer yet.&rdquo;
+    </p>
+    <p class="fragment__sig handwritten">&mdash; from a notebook, undated</p>
+  </div>
+</aside>
+
+<section class="index-strip" aria-labelledby="index-strip-title">
+  <h2 class="index-strip__title" id="index-strip-title">
+    <span class="meta">contents of the box</span>
+  </h2>
+
+  <dl class="index-strip__stats">
+    <div>
+      <dt>entries</dt>
+      <dd>{{ total }}</dd>
+    </div>
+    <div>
+      <dt>shelves</dt>
+      <dd>{{ site.data.categories | size }}</dd>
+    </div>
+    <div>
+      <dt>keywords</dt>
+      <dd>{{ site.tags | size }}</dd>
+    </div>
+    <div>
+      <dt>earliest</dt>
+      <dd>{{ site.posts.last.date | date: "%d.%m.%Y" }}</dd>
+    </div>
+  </dl>
+</section>
+
+{%- if site.posts.size > 0 %}
+<section class="shelf-preview" aria-labelledby="preview-title">
+  <h2 class="shelf-preview__title" id="preview-title">
+    <span class="meta">recovered most recently</span>
+  </h2>
+
+  <div class="catalogue">
+    {%- for entry in site.posts limit: 3 %}
+    <div role="listitem">
+      {% include entry.html post=entry %}
+    </div>
+    {%- endfor %}
+  </div>
+
+  <p class="backlink"><a href="{{ '/archive/' | relative_url }}">&larr; all {{ total }} entries, filed by number</a></p>
+</section>
+{%- endif %}

@@ -1,0 +1,51 @@
+---
+layout: default
+title: Tags
+permalink: /tags/
+description: >-
+  Loose keywords recovered from the margins of the RESTLESS SOUL archive.
+  Not a taxonomy — just the words that were in the room.
+---
+
+<header class="shelf">
+  <p class="shelf__eyebrow meta">{{ site.tags | size }} keywords &middot; written in the margins, not the index</p>
+  <h1 class="shelf__title">{{ page.title }}</h1>
+  <p class="shelf__note handwritten">These are not subjects. They are the words that were in the room.</p>
+
+  {%- if site.tags.size > 0 %}
+  <ul class="tagindex" aria-label="jump to a keyword">
+    {%- for tag in site.tags %}
+    <li class="tagindex__item">
+      <a class="tagindex__link" href="#tag-{{ tag[0] | slugify }}">
+        <span class="tagindex__tag">{{ tag[0] | slugify }}</span>
+        <span class="tagindex__count meta">{{ tag[1].size }}</span>
+      </a>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+</header>
+
+{%- if site.tags.size > 0 %}
+{%- for tag in site.tags %}
+<section class="tagblock" id="tag-{{ tag[0] | slugify }}">
+  <h2 class="tagblock__title">
+    <a class="tagblock__anchor" href="#tag-{{ tag[0] | slugify }}" aria-label="Permalink to {{ tag[0] | slugify }}">#</a>
+    {{ tag[0] | slugify }}
+    <span class="tagblock__count meta">{{ tag[1].size }} {% if tag[1].size == 1 %}entry{% else %}entries{% endif %}</span>
+  </h2>
+
+  <div class="catalogue" role="list">
+    {%- for entry in tag[1] %}
+    <div role="listitem">
+      {% include entry.html post=entry %}
+    </div>
+    {%- endfor %}
+  </div>
+</section>
+{%- endfor %}
+{%- else %}
+<p class="catalogue__empty">No keywords have been recovered yet.</p>
+{%- endif %}
+
+<p class="backlink"><a href="{{ '/archive/' | relative_url }}">&larr; back to the full catalogue</a></p>

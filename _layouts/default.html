@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<head>
+  {%- include head.html -%}
+</head>
+<body{% if page.body_class %} class="{{ page.body_class }}"{% endif %}>
+  <a class="skip-link" href="#main">skip to the writing</a>
+
+  {% include texture.html %}
+  {% include masthead.html %}
+
+  <main id="main" class="site" tabindex="-1">
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
+
+  {%- comment -%} Single 900-byte progressive enhancement: the archive filter. {%- endcomment -%}
+  <script src="{{ '/assets/js/archive.js' | relative_url }}" defer></script>
+</body>
+</html>

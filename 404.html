@@ -1,0 +1,29 @@
+---
+layout: default
+title: Not in the box
+permalink: /404.html
+noindex: true
+sitemap: false
+description: The page you asked for is not in this archive.
+---
+
+<section class="lost">
+  <div class="lost__seal" aria-hidden="true">{% include seal.html %}</div>
+
+  <p class="lost__no meta">ERROR 404 &middot; DOCUMENT NOT RECOVERED</p>
+
+  <h1 class="lost__title">This page was not in the box.</h1>
+
+  <p class="lost__body">
+    Either it was never here, or it was here and was not filed.
+    The archivist is not able to say which.
+  </p>
+
+  <p class="lost__actions">
+    <a class="enter enter--small" href="{{ '/archive/' | relative_url }}">
+      search the archive
+      <span class="enter__arrow" aria-hidden="true">&rarr;</span>
+    </a>
+    <a class="lost__back" href="{{ '/' | relative_url }}">&larr; back to the box</a>
+  </p>
+</section>

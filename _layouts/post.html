@@ -1,0 +1,89 @@
+---
+layout: default
+---
+{%- assign cat_slug = page.category | default: "fragments" -%}
+
+{%- assign cat_name = cat_slug | capitalize -%}
+{%- assign cat_mood = "" -%}
+{%- for c in site.data.categories -%}
+  {%- if c.slug == cat_slug -%}
+    {%- assign cat_name = c.name -%}
+    {%- assign cat_mood = c.mood -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- include archive_number.html post=page -%}
+{%- include shelf_url.html slug=cat_slug -%}
+
+<article class="document{% if page.poem %} document--verse{% endif %}" data-category="{{ cat_slug }}"{% if cat_mood %} data-mood="{{ cat_mood }}"{% endif %}>
+
+  <div class="document__stamp" aria-hidden="true">
+    {% include seal.html %}
+    <span class="document__stamp-no meta">{{ archive_number }}</span>
+  </div>
+
+  <header class="document__head">
+    <p class="document__no meta">ARCHIVE {{ archive_number }}</p>
+    <h1 class="document__title">{{ page.title }}</h1>
+
+    <dl class="document__facts">
+      <div class="document__fact">
+        <dt>category</dt>
+        <dd>
+          {%- if has_shelf -%}
+          <a href="{{ shelf_url | relative_url }}">{{ cat_name | upcase }}</a>
+          {%- else -%}
+          {{ cat_name | upcase }}
+          {%- endif -%}
+        </dd>
+      </div>
+      <div class="document__fact">
+        <dt>date</dt>
+        <dd><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d.%m.%Y" }}</time></dd>
+      </div>
+      {%- if page.status %}
+      <div class="document__fact">
+        <dt>status</dt>
+        <dd><span class="status status--{{ page.status | downcase | replace: ' ', '-' }}">{{ page.status | upcase }}</span></dd>
+      </div>
+      {%- endif %}
+      {%- if page.location %}
+      <div class="document__fact">
+        <dt>found</dt>
+        <dd>{{ page.location }}</dd>
+      </div>
+      {%- endif %}
+    </dl>
+
+    {%- if page.tags and page.tags.size > 0 %}
+    <p class="document__tags meta">
+      <span class="document__tags-label">tags</span>
+      {%- for tag in page.tags -%}
+      <a href="{{ '/tags/' | relative_url }}#tag-{{ tag | slugify }}">{{ tag | slugify }}</a>{% unless forloop.last %}<span aria-hidden="true">&middot;</span>{% endunless %}
+      {%- endfor -%}
+    </p>
+    {%- endif %}
+  </header>
+
+  <div class="document__rule" aria-hidden="true"></div>
+
+  <div class="document__body prose{% if page.poem %} prose--verse{% endif %}">
+    {{ content }}
+  </div>
+
+  {%- if page.note %}
+  <aside class="authornote">
+    <h2 class="authornote__label meta">author&rsquo;s note</h2>
+    <div class="authornote__body prose">
+      {%- if page.note contains "\n\n" -%}
+        {{ page.note | markdownify }}
+      {%- else -%}
+        <p>{{ page.note | strip_html }}</p>
+      {%- endif -%}
+    </div>
+  </aside>
+  {%- endif %}
+
+  {% include post_nav.html %}
+
+</article>

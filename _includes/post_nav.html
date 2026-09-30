@@ -1,0 +1,58 @@
+{%- comment -%}
+  Previous / next navigation.
+
+  Written against site.posts directly rather than page.previous/page.next
+  so that "previous" always means the lower archive number and the
+  direction can never silently flip between Jekyll versions.
+  site.posts is newest-first; archive numbers run oldest-first.
+{%- endcomment -%}
+
+{%- assign hit = false -%}
+{%- assign newer = nil -%}
+{%- assign older = nil -%}
+{%- assign seen_newer = nil -%}
+
+{%- for p in site.posts -%}
+  {%- if hit -%}
+    {%- if older == nil -%}{%- assign older = p -%}{%- endif -%}
+  {%- endif -%}
+  {%- if p.url == page.url -%}
+    {%- assign hit = true -%}
+    {%- assign newer = seen_newer -%}
+  {%- else -%}
+    {%- assign seen_newer = p -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<nav class="docnav" aria-label="archive navigation">
+  <div class="docnav__side">
+    {%- if older -%}
+    {%- include archive_number.html post=older -%}
+    <a class="docnav__link" rel="prev" href="{{ older.url | relative_url }}">
+      <span class="docnav__dir meta" aria-hidden="true">&larr;</span>
+      <span class="docnav__label meta">previous entry</span>
+      <span class="docnav__title">{{ older.title | escape }}</span>
+      <span class="docnav__no meta">archive {{ archive_number }}</span>
+    </a>
+    {%- endif %}
+  </div>
+
+  <div class="docnav__center">
+    <a class="docnav__back" href="{{ '/archive/' | relative_url }}">
+      {% include seal.html %}
+      <span>back to archive</span>
+    </a>
+  </div>
+
+  <div class="docnav__side docnav__side--next">
+    {%- if newer -%}
+    {%- include archive_number.html post=newer -%}
+    <a class="docnav__link docnav__link--next" rel="next" href="{{ newer.url | relative_url }}">
+      <span class="docnav__dir meta" aria-hidden="true">&rarr;</span>
+      <span class="docnav__label meta">next entry</span>
+      <span class="docnav__title">{{ newer.title | escape }}</span>
+      <span class="docnav__no meta">archive {{ archive_number }}</span>
+    </a>
+    {%- endif %}
+  </div>
+</nav>

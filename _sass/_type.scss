@@ -1,0 +1,141 @@
+/* ==========================================================================
+   type — the reading surface
+   Poetry is the reason this file is careful. `prose--verse` keeps the
+   author's line breaks without asking the author to add trailing spaces.
+   ========================================================================== */
+
+.meta {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+  font-weight: 400;
+}
+
+.nowrap { white-space: nowrap; }
+
+.handwritten {
+  font-family: var(--script);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-70);
+  letter-spacing: 0.01em;
+}
+
+/* -- prose --------------------------------------------------------------- */
+.prose {
+  color: var(--parchment);
+  font-size: 1.0625rem;
+  line-height: 1.78;
+  letter-spacing: 0.005em;
+}
+
+.prose > * + * { margin-top: 1.4em; }
+
+.prose p { text-wrap: pretty; }
+
+.prose h2,
+.prose h3 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: var(--ivory);
+  margin-top: 2.4em;
+  margin-bottom: -0.4em;
+}
+
+.prose h3 { font-size: 1.1rem; color: var(--ivory-dim); }
+
+.prose a {
+  color: var(--ivory);
+  border-bottom: 1px solid var(--crimson);
+  padding-bottom: 0.05em;
+  transition: border-color var(--quick) var(--ease), color var(--quick) var(--ease);
+}
+
+.prose a:hover { color: var(--crimson-lit); border-bottom-color: var(--crimson-lit); }
+
+.prose em { font-style: italic; color: var(--ivory); }
+
+.prose strong { font-weight: 600; color: var(--ivory); }
+
+.prose blockquote {
+  margin: 1.8em 0;
+  padding-left: 1.2rem;
+  border-left: 1px solid var(--brown-dim);
+  color: var(--ink-70);
+  font-style: italic;
+}
+
+.prose ul,
+.prose ol {
+  margin-left: 1.4em;
+}
+
+.prose li { list-style: none; position: relative; }
+.prose ul li::before { content: "—"; position: absolute; left: -1.2em; color: var(--brown); }
+.prose ol { counter-reset: li; }
+.prose ol li { counter-increment: li; }
+.prose ol li::before { content: counter(li) "."; position: absolute; left: -1.6em; color: var(--brown); font-family: var(--mono); font-size: 0.8em; }
+
+.prose code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  background: var(--charcoal-2);
+  padding: 0.15em 0.35em;
+  border: 1px solid var(--edge);
+}
+
+.prose pre {
+  background: var(--charcoal);
+  border: 1px solid var(--edge);
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.prose pre code { background: none; border: 0; padding: 0; }
+
+.prose hr {
+  border: 0;
+  border-top: var(--rule);
+  width: 40%;
+  margin: 2.6em auto;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.prose th,
+.prose td {
+  text-align: left;
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  border-bottom: var(--rule);
+}
+
+.prose th {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+  font-weight: 400;
+}
+
+/* -- verse --------------------------------------------------------------- */
+/* In a poem, a single newline is a line break and a blank line is a
+   stanza break. kramdown joins the soft-wrapped lines into one <p>;
+   pre-wrap puts them back exactly as typed, including indentation. */
+.prose--verse p {
+  white-space: pre-wrap;
+  margin-top: 0;
+  margin-bottom: 1.5em;
+  text-wrap: initial;
+}
+
+.prose--verse p:last-child { margin-bottom: 0; }

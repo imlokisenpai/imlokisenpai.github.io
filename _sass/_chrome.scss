@@ -1,0 +1,182 @@
+/* ==========================================================================
+   chrome — masthead, wordmark, navigation, seal, colophon
+   ========================================================================== */
+
+.seal {
+  display: block;
+  color: var(--brown);
+  flex: none;
+}
+
+/* -- masthead ------------------------------------------------------------ */
+.masthead {
+  position: relative;
+  z-index: 10;
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 1.25rem var(--gutter) 0;
+}
+
+.masthead__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+}
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.25rem 0;
+  transition: opacity var(--quick) var(--ease);
+}
+
+.wordmark:hover { opacity: 0.78; }
+
+.wordmark .seal { width: 1.75rem; height: 1.75rem; }
+
+.wordmark__text { display: flex; flex-direction: column; gap: 0.1rem; }
+
+.wordmark__name {
+  font-size: 0.875rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ivory);
+}
+
+.wordmark__box {
+  font-family: var(--mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brown-text);
+}
+
+.masthead__rule {
+  height: 1px;
+  margin-top: 1rem;
+  background: linear-gradient(to right, var(--brown-dim) 0%, var(--ink-12) 55%, transparent 100%);
+}
+
+/* -- navigation ---------------------------------------------------------- */
+.nav { flex: 0 1 auto; }
+
+.nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem 1.15rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.nav__list a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  padding: 0.6rem 0;
+  color: var(--ivory-dim);
+  position: relative;
+  transition: color var(--quick) var(--ease);
+}
+
+.nav__key { color: var(--brown-dim); transition: color var(--quick) var(--ease); }
+
+/* The annotation a nav item is hiding, revealed on hover or keyboard
+   focus. It is display:none below the breakpoint that has a pointer, so it
+   can never widen the page on a phone, and the last two items hang from
+   their right edge so the note cannot run off the right of the window. */
+.nav__note { display: none; }
+
+@media (min-width: 48rem) {
+  .nav__note {
+    display: block;
+    position: absolute;
+    top: calc(100% + 0.3rem);
+    left: 0;
+    font-family: var(--script);
+    font-size: 0.8rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--ink-45);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-3px);
+    transition: opacity var(--quick) var(--ease), transform var(--quick) var(--ease);
+    pointer-events: none;
+  }
+
+  .nav__list li:nth-last-child(-n+2) .nav__note {
+    left: auto;
+    right: 0;
+  }
+
+  .nav__list a:hover .nav__note,
+  .nav__list a:focus-visible .nav__note {
+    opacity: 0.85;
+    transform: none;
+  }
+}
+
+.nav__list a:hover,
+.nav__list a:focus-visible { color: var(--ivory); }
+
+.nav__list a:hover .nav__key,
+.nav__list a:focus-visible .nav__key { color: var(--crimson-lit); }
+
+.nav__list a[aria-current="page"] { color: var(--ivory); }
+.nav__list a[aria-current="page"] .nav__key { color: var(--crimson); }
+
+.nav__list a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.15rem;
+  height: 1px;
+  background: var(--crimson);
+  opacity: 0.6;
+}
+
+/* -- colophon ------------------------------------------------------------ */
+.colophon {
+  margin-top: 4rem;
+  border-top: var(--rule);
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.35));
+}
+
+.colophon__inner {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 2rem var(--gutter) 3rem;
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.colophon__seal .seal { width: 2.25rem; height: 2.25rem; opacity: 0.6; }
+
+.colophon__body { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.colophon__line { font-size: 0.8rem; color: var(--ink-70); line-height: 1.6; }
+.colophon__line--dim { color: var(--ink-45); max-width: 46ch; }
+
+.colophon__line .meta { color: var(--brown-text); }
+
+.colophon__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-top: 0.35rem;
+}
+
+.colophon__links a { color: var(--ivory-dim); transition: color var(--quick) var(--ease); }
+.colophon__links a:hover { color: var(--ivory); }
+.colophon__links span { color: var(--brown-dim); }

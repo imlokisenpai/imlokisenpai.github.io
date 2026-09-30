@@ -1,0 +1,128 @@
+/* ==========================================================================
+   responsive
+   Mobile is the designed case, not the shrunk case. Decoration is reduced
+   before reading is affected: nothing in the writing path changes width or
+   size between 320px and 1600px except to grow.
+   ========================================================================== */
+
+/* -- small phones -------------------------------------------------------- */
+@media (max-width: 30rem) {
+  .prose { font-size: 1.0625rem; }
+
+  .cover__carton { font-size: 0.5rem; padding: 0.3rem 0.5rem; }
+  .cover__title { letter-spacing: 0.06em; }
+  .cover__sub { max-width: none; }
+
+  .nav__list { gap: 0.2rem 0.9rem; }
+  .nav__key { display: none; }
+
+  .document__facts { gap: 0.4rem 1.25rem; }
+  .document__title { max-width: none; }
+
+  .entry__excerpt { font-size: 0.95rem; }
+
+  .index-strip__stats { gap: 1.1rem 0.75rem; }
+  .index-strip__stats dd { font-size: 1.2rem; }
+
+  .fragment__paper { padding: 1.4rem 1.15rem 1.6rem; }
+
+  .colophon__inner { flex-direction: column; gap: 1rem; }
+  .colophon__seal .seal { width: 1.75rem; height: 1.75rem; }
+}
+
+/* -- tablets: the catalogue gets its margin column ----------------------- */
+@media (min-width: 40rem) {
+  .entry {
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    gap: 0 1.75rem;
+  }
+
+  .entry__gutter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.3rem 0 0;
+    border-bottom: 0;
+  }
+
+  .entry__seal { display: block; }
+
+  /* the hairline the number is printed on, running the height of the row */
+  .entry__hairline {
+    display: block;
+    position: absolute;
+    left: 7.4rem;
+    top: 0.6rem;
+    bottom: 0.6rem;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--ink-12), transparent);
+  }
+
+  .entry:hover .entry__hairline {
+    background: linear-gradient(to bottom, var(--crimson), transparent);
+    opacity: 0.5;
+  }
+
+  .entry--plate { padding: 1.75rem 1.75rem; }
+  .entry--plate .entry__hairline { left: 8.6rem; }
+
+  .filters__label { width: auto; flex: none; }
+
+  .shelves { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .index-strip__stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* -- desktop: the archival composition ---------------------------------- */
+@media (min-width: 62rem) {
+  .cover { min-height: 74vh; }
+
+  .document__stamp { display: flex; }
+
+  .docnav {
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .docnav__side--next { text-align: right; align-items: flex-end; }
+  .docnav__side--next .docnav__link { align-items: flex-end; margin-left: auto; }
+  .docnav__side--next .docnav__link:hover { transform: translateX(3px); }
+
+  .docnav__center { justify-content: center; }
+
+  .sheet__body,
+  .document__body { font-size: 1.125rem; }
+
+  /* the existential shelf narrows its own measure; nothing else does */
+
+  .entry__title { font-size: 1.35rem; }
+
+  .shelves { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* the reading measure is fixed at every width: 34rem, about 68
+     characters, so the writing never gets wider just because the window
+     did */
+}
+
+/* -- very wide: stop growing -------------------------------------------- */
+@media (min-width: 90rem) {
+  .cover__title { font-size: 5.25rem; }
+  .prose { font-size: 1.125rem; }
+}
+
+/* -- print: an archive should be printable ------------------------------- */
+@media print {
+  body { background: #fff; color: #111; }
+  body::before,
+  .grain,
+  .vignette,
+  .masthead,
+  .colophon,
+  .docnav,
+  .filters,
+  .document__stamp { display: none !important; }
+  .site { max-width: none; padding: 0; }
+  .prose { color: #111; }
+  .meta { color: #555; }
+}

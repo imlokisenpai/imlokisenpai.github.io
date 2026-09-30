@@ -1,0 +1,55 @@
+---
+layout: default
+---
+{%- comment -%}
+  A shelf. Jekyll 4 has no built-in category pages, so each shelf is a
+  page under _pages/category/ that hands this layout its slug in front
+  matter. Everything inside is still generated from site.posts.
+{%- endcomment -%}
+
+{%- assign slug = page.category_filter | default: page.title | downcase | slugize -%}
+
+{%- assign cat_name = slug | capitalize -%}
+{%- assign cat_mood = "" -%}
+{%- assign cat_note = "" -%}
+{%- assign cat_mark = "" -%}
+{%- for c in site.data.categories -%}
+  {%- if c.slug == slug -%}
+    {%- assign cat_name = c.name -%}
+    {%- assign cat_mood = c.mood -%}
+    {%- assign cat_note = c.note -%}
+    {%- assign cat_mark = c.mark -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- assign items = site.posts | where: "category", slug -%}
+
+<header class="shelf"{% if cat_mood %} data-mood="{{ cat_mood }}"{% endif %}>
+  <p class="shelf__eyebrow meta">
+    shelf &middot; {{ items | size }} {% if items.size == 1 %}entry{% else %}entries{% endif %}
+  </p>
+
+  <h1 class="shelf__title">{{ cat_name }}</h1>
+
+  {%- if cat_note %}
+  <p class="shelf__note handwritten">{{ cat_note }}</p>
+  {%- endif %}
+
+  {%- if cat_mark %}
+  <p class="shelf__mark meta">on the shelf: {{ cat_mark }}</p>
+  {%- endif %}
+</header>
+
+{%- if items.size > 0 %}
+<div class="catalogue" role="list">
+  {%- for entry in items %}
+  <div role="listitem">
+    {% include entry.html post=entry tone="plate" %}
+  </div>
+  {%- endfor %}
+</div>
+{%- else %}
+<p class="catalogue__empty">This shelf is empty. Nothing was ever filed here.</p>
+{%- endif %}
+
+<p class="backlink"><a href="{{ '/archive/' | relative_url }}">&larr; back to the full catalogue</a></p>

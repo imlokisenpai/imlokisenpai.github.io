@@ -1,0 +1,56 @@
+/* ==========================================================================
+   lost — 404
+   ========================================================================== */
+
+.lost {
+  min-height: 62vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2.5rem, 8vh, 5rem) 0;
+  max-width: 34rem;
+  position: relative;
+}
+
+.lost__seal {
+  color: var(--brown);
+  opacity: 0.28;
+  margin-bottom: 2rem;
+  animation: seal-breathe 9s var(--ease) infinite;
+}
+
+.lost__seal .seal { width: 3.5rem; height: 3.5rem; }
+
+.lost__no { color: var(--crimson-lit); margin-bottom: 1.1rem; }
+
+.lost__title {
+  font-size: clamp(1.7rem, 6.5vw, 2.6rem);
+  line-height: 1.1;
+  color: var(--ivory);
+}
+
+.lost__body {
+  margin-top: 1.25rem;
+  color: var(--ink-70);
+  font-style: italic;
+  max-width: 40ch;
+}
+
+.lost__actions {
+  margin-top: 2.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.lost__back {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+  transition: color var(--quick) var(--ease);
+}
+
+.lost__back:hover { color: var(--ivory); }

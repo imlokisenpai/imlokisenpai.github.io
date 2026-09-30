@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="RESTLESS SOUL">
+  <rect width="48" height="48" rx="6" fill="#0b0a09"/>
+  <g fill="none" stroke="#c8bda6" stroke-width="1.4" stroke-linecap="round">
+    <path d="M15.5 4.6a20 20 0 1 1-6.1 6.1"/>
+    <path d="M24 12.5 27 24l-3 11.5L21 24z" stroke-width="1.1"/>
+    <path d="M16 24c2.6-3.2 5.4-4.8 8-4.8s5.4 1.6 8 4.8c-2.6 3.2-5.4 4.8-8 4.8s-5.4-1.6-8-4.8z" stroke-width="1"/>
+    <circle cx="24" cy="24" r="1.8" stroke-width="1"/>
+  </g>
+</svg>

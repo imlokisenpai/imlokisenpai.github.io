@@ -1,0 +1,28 @@
+# Primary navigation. key is the small typographic mark shown before the
+# label; note is a faint annotation revealed on hover/focus.
+
+main:
+  - key: "00"
+    title: "the box"
+    url: "/"
+    note: "cover of the carton"
+
+  - key: "01"
+    title: "archive"
+    url: "/archive/"
+    note: "catalogue of everything inside"
+
+  - key: "02"
+    title: "categories"
+    url: "/categories/"
+    note: "seven shelves"
+
+  - key: "03"
+    title: "tags"
+    url: "/tags/"
+    note: "loose keywords, not taxonomy"
+
+  - key: "04"
+    title: "colophon"
+    url: "/colophon/"
+    note: "how this box was assembled"

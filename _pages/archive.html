@@ -1,0 +1,64 @@
+---
+layout: default
+title: The Archive
+permalink: /archive/
+description: >-
+  The full catalogue of RESTLESS SOUL — every recovered writing, filed by
+  archive number, with category, date and status.
+---
+{%- assign total = site.posts | size -%}
+
+<header class="shelf">
+  <p class="shelf__eyebrow meta">catalogue &middot; box no. {{ site.data.site.archive_box }} &middot; {{ total }} {% if total == 1 %}entry{% else %}entries{% endif %}</p>
+
+  <h1 class="shelf__title">{{ page.title }}</h1>
+
+  <p class="shelf__note handwritten">Everything that was in the box, in the order it was filed. Numbers are not dates &mdash; they are the order the hands found them.</p>
+
+  <p class="shelf__how meta">
+    Each entry is a single document. <span class="nowrap">ARCHIVE 000</span> is the oldest.
+    Nothing here has been reordered since it was filed.
+  </p>
+</header>
+
+{%- comment -%}
+  Filtering. Without JavaScript the controls are simply absent-ish: the
+  markup below is hidden by default and revealed by the script, so the
+  full catalogue always renders. See assets/js/archive.js.
+{%- endcomment -%}
+<form class="filters" data-filters hidden>
+  <div class="filters__row" role="group" aria-label="filter by shelf">
+    <span class="filters__label meta">shelf</span>
+    <div class="filters__set">
+      <button type="button" class="filter" data-filter="all" aria-pressed="true">all</button>
+      {%- for c in site.data.categories -%}
+      {%- assign count = site.categories[c.slug] | size -%}
+      <button type="button" class="filter" data-filter="{{ c.slug }}" aria-pressed="false">
+        {{ c.name | downcase }}<span class="filter__count meta">{{ count }}</span>
+      </button>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="filters__row">
+    <label class="filters__label meta" for="catalogue-search">look for</label>
+    <input class="filters__input" id="catalogue-search" type="search" name="q"
+           placeholder="a word, a title, a date&hellip;" autocomplete="off" spellcheck="false">
+  </div>
+
+  <p class="filters__status meta" role="status" aria-live="polite" data-filter-status></p>
+</form>
+
+<div class="catalogue" data-catalogue role="list">
+  {%- for entry in site.posts reversed %}
+  <div role="listitem">
+    {% include entry.html post=entry %}
+  </div>
+  {%- endfor %}
+</div>
+
+<p class="catalogue__empty" data-empty hidden>
+  Nothing in the box matches that. <button type="button" class="linkbutton" data-reset>Show everything again</button>
+</p>
+
+<p class="backlink"><a href="{{ '/' | relative_url }}">&larr; back to the box</a></p>

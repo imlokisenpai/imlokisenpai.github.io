@@ -1,0 +1,11 @@
+* text=auto eol=lf
+
+*.rb   text diff=ruby
+*.yml  text
+*.css  text
+*.js   text
+*.html text
+*.md   text
+
+Gemfile.lock  text -diff
+vendor/       binary -diff -merge linguist-vendored

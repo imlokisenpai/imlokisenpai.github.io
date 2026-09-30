@@ -1,0 +1,51 @@
+---
+layout: default
+title: Categories
+permalink: /categories/
+description: >-
+  The seven shelves of the RESTLESS SOUL archive, and how many recovered
+  writings sit on each.
+---
+
+<header class="shelf">
+  <p class="shelf__eyebrow meta">{{ site.data.categories | size }} shelves &middot; filed by feeling, not by subject</p>
+  <h1 class="shelf__title">{{ page.title }}</h1>
+  <p class="shelf__note handwritten">The archivist filed these by feeling. The system is not logical. It has never been logical.</p>
+</header>
+
+<ol class="shelves">
+  {%- for c in site.data.categories -%}
+  {%- assign count = site.categories[c.slug] | size -%}
+
+  {%- comment -%}
+    A shelf page only exists for the shelves declared in
+    _data/categories.yml. Anything else still gets a count here, but no
+    link, so nothing dead is ever linked to.
+  {%- endcomment -%}
+  {%- include shelf_url.html slug=c.slug -%}
+
+  <li class="shelf-item{% if count == 0 %} shelf-item--empty{% endif %}"{% if c.mood %} data-mood="{{ c.mood }}"{% endif %}>
+    {%- if has_shelf %}
+    <a class="shelf-item__link" href="{{ shelf_url | relative_url }}"{% if count == 0 %} aria-disabled="true"{% endif %}>
+    {%- else %}
+    <div class="shelf-item__link">
+    {%- endif %}
+      <span class="shelf-item__no meta">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span>
+
+      <span class="shelf-item__name">{{ c.name }}</span>
+
+      <span class="shelf-item__note">{{ c.note }}</span>
+
+      <span class="shelf-item__count meta">
+        {%- if count > 0 -%}
+          {{ count }} {% if count == 1 %}entry{% else %}entries{% endif %}
+        {%- else -%}
+          shelf empty
+        {%- endif -%}
+      </span>
+    {%- if has_shelf %}</a>{% else %}</div>{% endif %}
+  </li>
+  {%- endfor %}
+</ol>
+
+<p class="backlink"><a href="{{ '/archive/' | relative_url }}">&larr; back to the full catalogue</a></p>

@@ -1,0 +1,28 @@
+<header class="masthead" role="banner">
+  <div class="masthead__top">
+    <a class="wordmark" href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>
+      {% include seal.html %}
+      <span class="wordmark__text">
+        <span class="wordmark__name">{{ site.title }}</span>
+        <span class="wordmark__box">box no. {{ site.data.site.archive_box }} &middot; unlabelled</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="archive sections">
+      <ul class="nav__list">
+        {%- for link in site.data.navigation.main %}
+        <li>
+          <a href="{{ link.url | relative_url }}"
+             {% if page.url == link.url %}aria-current="page"{% endif %}
+             {%- if link.note %} data-note="{{ link.note | escape }}"{% endif %}>
+            <span class="nav__key" aria-hidden="true">{{ link.key }}</span>{{ link.title }}
+            {%- if link.note %} <span class="nav__note" aria-hidden="true">{{ link.note }}</span>{% endif %}
+          </a>
+        </li>
+        {%- endfor %}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="masthead__rule" aria-hidden="true"></div>
+</header>

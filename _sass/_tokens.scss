@@ -1,0 +1,77 @@
+/* ==========================================================================
+   RESTLESS SOUL — design tokens
+   Near-black, charcoal, aged parchment, faded ivory, muted brown, and a
+   dark crimson used sparingly enough that it still means something.
+   ========================================================================== */
+
+:root {
+  /* -- type ------------------------------------------------------------- */
+  /* Elegant serif for titles and writing. Old-style where the system has
+     it, because the archive is a paper thing. */
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
+           Georgia, "Times New Roman", "Noto Serif", serif;
+
+  /* Typewriter for metadata. */
+  --mono: ui-monospace, "SFMono-Regular", "IBM Plex Mono", "DejaVu Sans Mono",
+          Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Handwriting is used only for annotations in the margin. It is never
+     used for a whole document. */
+  --script: "Segoe Script", "Bradley Hand", "Snell Roundhand", "Bradley Hand ITC",
+            "Lucida Handwriting", "Apple Chancery", cursive;
+
+  /* -- surfaces --------------------------------------------------------- */
+  --void:      #0b0a09;  /* the page */
+  --charcoal:  #14120f;  /* raised paper */
+  --charcoal-2:#1c1916;  /* a second raise */
+  --edge:      #262119;  /* the cut edge of a document */
+
+  /* Every colour below that carries text was measured against --void and
+     against the raised --charcoal panel. The 11px metadata is small enough
+     that anything under 4.5:1 is a legibility bug, not a mood. */
+  --parchment: #d8ccb2;  /* the writing itself          12.4:1 / 11.8:1 */
+  --ivory:     #efe6d3;  /* titles, headings           16.0:1 / 15.1:1 */
+  --ivory-dim: #b6ab93;  /* secondary text              8.7:1 /  8.2:1 */
+  --ink-70:    #a49a86;  /* excerpts, notes             7.7:1 /  7.3:1 */
+  --ink-45:    #8b8372;  /* tertiary metadata           5.3:1 /  5.0:1 */
+  --brown-text:#9c8f74;  /* field labels, shelf marks   6.2:1 /  5.9:1 */
+
+  --brown:     #7a6a51;  /* rules and rules only        decorative */
+  --brown-dim: #4a4133;  /* hairlines                   decorative */
+
+  --crimson:   #7d2126;  /* lines, stamps, the rule     decorative */
+  --crimson-lit:#c2565c; /* text: the archive number    4.5:1 /  4.3:1 */
+
+  /* -- ink (rules, borders and overlays only, never text) -------------- */
+  --ink-22: rgba(216, 204, 178, 0.22);
+  --ink-12: rgba(216, 204, 178, 0.12);
+  --ink-06: rgba(216, 204, 178, 0.06);
+
+  /* -- structure -------------------------------------------------------- */
+  --measure: 34rem;      /* reading width of a document */
+  --wide: 62rem;         /* catalogue width */
+  --gutter: clamp(1.25rem, 5vw, 3.5rem);
+
+  --hair: 1px;
+  --rule: 1px solid var(--brown-dim);
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --slow: 620ms;
+  --quick: 220ms;
+
+  /* -- texture ---------------------------------------------------------- */
+  --grain-opacity: 0.055;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.9'/%3E%3C/svg%3E");
+  --fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.34' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23f)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+/* Category moods shift three variables only: the paper tone, the mark
+   colour and the accent. Everything structural stays identical so the
+   archive reads as one object. */
+[data-mood="love"]        { --mood-paper: #dccfb6; --mood-mark: #b39a86; --mood-accent: #6d5148; }
+[data-mood="grief"]       { --mood-paper: #cfc5b1; --mood-mark: #8a8578; --mood-accent: #3f3d38; }
+[data-mood="anger"]       { --mood-paper: #d3c4ae; --mood-mark: #8a5a53; --mood-accent: var(--crimson); }
+[data-mood="existential"] { --mood-paper: #d6cbb6; --mood-mark: #7e7869; --mood-accent: #5a5c56; }
+[data-mood="dreams"]      { --mood-paper: #d9d0bd; --mood-mark: #8e93a0; --mood-accent: #4d5460; }
+[data-mood="unfinished"]  { --mood-paper: #d2c6ae; --mood-mark: #857a63; --mood-accent: #6a5c42; }
+[data-mood="fragments"]   { --mood-paper: #d4c9b3; --mood-mark: #7d7360; --mood-accent: #57503f; }

@@ -1,0 +1,43 @@
+{%- comment -%}
+  archive numbers
+
+  Numbers are never written into a post. They are derived from the order of
+  site.posts, oldest first, so ARCHIVE 001 is always the oldest writing in
+  the box and the numbers stay stable as long as dates are not rewritten.
+
+  Usage inside any layout:
+
+    {% include archive_number.html post=page %}
+
+  Liquid cannot pad an integer, so the number is turned into a string and
+  the leading zeros are added by hand. Documents 1000 and up simply keep
+  their full width.
+{%- endcomment -%}
+
+{%- assign posts = site.posts -%}
+{%- if include.posts -%}
+  {%- assign posts = include.posts -%}
+{%- endif -%}
+
+{%- assign target = include.post | default: page -%}
+{%- assign found = 0 -%}
+
+{%- for p in posts reversed -%}
+  {%- if p.url == target.url -%}
+    {%- assign found = forloop.index -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- capture found_string %}{{ found }}{%- endcapture -%}
+{%- assign width = found_string | size -%}
+
+{%- if width == 1 -%}
+  {%- assign pad = "00" -%}
+{%- elsif width == 2 -%}
+  {%- assign pad = "0" -%}
+{%- else -%}
+  {%- assign pad = "" -%}
+{%- endif -%}
+
+{%- assign archive_number = pad | append: found_string -%}

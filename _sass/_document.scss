@@ -1,0 +1,242 @@
+/* ==========================================================================
+   document — one recovered writing
+   ========================================================================== */
+
+.document {
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+/* -- the stamp ----------------------------------------------------------- */
+/* Watermark in the corner of the sheet. Decorative, never in the reading
+   path, and it does not move. */
+.document__stamp {
+  position: absolute;
+  top: clamp(1.5rem, 5vh, 2.5rem);
+  right: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--brown);
+  opacity: 0.42;
+  transform: rotate(-6deg);
+  pointer-events: none;
+}
+
+.document__stamp .seal { width: 2.75rem; height: 2.75rem; }
+
+.document__stamp-no {
+  letter-spacing: 0.3em;
+  color: var(--brown);
+  text-indent: 0.3em;
+}
+
+/* -- head ---------------------------------------------------------------- */
+.document__head { padding: clamp(2.5rem, 8vh, 4.5rem) 0 0; }
+
+.document__no {
+  color: var(--crimson-lit);
+  letter-spacing: 0.24em;
+  margin-bottom: 1.1rem;
+}
+
+.document__title {
+  font-size: clamp(1.8rem, 7vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: 0.02em;
+  color: var(--ivory);
+  max-width: 20ch;
+}
+
+.document__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2.25rem;
+  margin-top: 1.75rem;
+}
+
+.document__fact {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.document__fact dt {
+  font-family: var(--mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brown-text);
+}
+
+.document__fact dd {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ivory-dim);
+}
+
+.document__fact a { border-bottom: 1px solid transparent; }
+.document__fact a:hover { color: var(--ivory); border-bottom-color: var(--crimson); }
+
+.status {
+  border: 1px solid var(--brown-dim);
+  padding: 0.15rem 0.45rem;
+  color: var(--ivory);
+}
+
+.status--unresolved,
+.status--unfinished { border-color: var(--crimson); color: var(--crimson-lit); }
+
+.status--recanted { text-decoration: line-through; text-decoration-color: var(--crimson); }
+
+.document__tags {
+  margin-top: 1.5rem;
+  color: var(--brown-text);
+  text-transform: none;
+  letter-spacing: 0.1em;
+  font-size: 0.625rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.document__tags-label { color: var(--ink-45); letter-spacing: 0.2em; text-transform: uppercase; }
+.document__tags a { color: var(--ink-45); }
+.document__tags a:hover { color: var(--ivory-dim); }
+
+/* -- the rule between the facts and the text ----------------------------- */
+.document__rule {
+  position: relative;
+  margin: 2.25rem 0 2.5rem;
+  height: 1px;
+  max-width: 14rem;
+  background: linear-gradient(to right, var(--brown-dim), transparent);
+}
+
+.document__rule::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: -2.5px;
+  width: 5px;
+  height: 5px;
+  border: 1px solid var(--brown-dim);
+  transform: rotate(45deg);
+}
+
+/* -- the writing --------------------------------------------------------- */
+.document__body {
+  max-width: var(--measure);
+  font-size: 1.0625rem;
+}
+
+/* A verse sheet gets a faint paper wash behind it, and a little more air
+   between stanzas. Nothing else changes. */
+.document--verse .document__body {
+  padding: clamp(1.25rem, 4vw, 2.25rem) clamp(1rem, 3.5vw, 2rem);
+  background: linear-gradient(180deg, rgba(216, 204, 178, 0.045), transparent 85%);
+  border-left: 1px solid var(--ink-12);
+}
+
+.document--verse .document__body::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+/* -- author's note ------------------------------------------------------- */
+.authornote {
+  max-width: var(--measure);
+  margin-top: clamp(2.5rem, 7vh, 4rem);
+  padding: 1.25rem 0 0 1.25rem;
+  border-left: 1px solid var(--brown-dim);
+  position: relative;
+}
+
+.authornote::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0;
+  width: 1px;
+  height: 2.25rem;
+  background: var(--crimson);
+  opacity: 0.7;
+}
+
+.authornote__label {
+  color: var(--brown-text);
+  margin-bottom: 0.75rem;
+}
+
+.authornote__body {
+  font-size: 0.925rem;
+  font-style: italic;
+  color: var(--ink-70);
+}
+
+.authornote__body p + p { margin-top: 1em; }
+
+/* -- previous / next ----------------------------------------------------- */
+.docnav {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: clamp(3rem, 9vh, 5rem);
+  padding-top: 1.5rem;
+  border-top: var(--rule);
+}
+
+.docnav__side { min-width: 0; }
+
+.docnav__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.5rem 0;
+  max-width: 22rem;
+  transition: transform var(--quick) var(--ease);
+}
+
+.docnav__link:hover { transform: translateX(-3px); }
+.docnav__link--next:hover { transform: translateX(3px); }
+
+.docnav__dir { color: var(--brown); font-size: 0.875rem; }
+.docnav__label { color: var(--ink-45); }
+
+.docnav__title {
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  color: var(--ivory-dim);
+  transition: color var(--quick) var(--ease);
+}
+
+.docnav__link:hover .docnav__title { color: var(--ivory); }
+.docnav__no { color: var(--ink-45); font-size: 0.5625rem; }
+
+.docnav__center {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0;
+}
+
+.docnav__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-45);
+  transition: color var(--quick) var(--ease);
+}
+
+.docnav__back .seal { width: 1.1rem; height: 1.1rem; }
+
+.docnav__back:hover { color: var(--ivory); }
+.docnav__back:hover .seal { color: var(--brown); }
