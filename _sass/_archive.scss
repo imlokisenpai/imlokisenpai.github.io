@@ -422,3 +422,14 @@
 .sheet__hand { margin-top: 1.5rem; }
 
 .sheet__body { max-width: var(--measure); padding-top: 2rem; }
+
+/* A heading written in the page body stands in for .sheet__title. */
+.sheet__body h1 {
+  font-size: clamp(1.9rem, 7.5vw, 3.1rem);
+  line-height: 1.05;
+  color: var(--ivory);
+  letter-spacing: 0.02em;
+  margin-top: 0;
+  margin-bottom: 1.5em;
+  white-space: pre-wrap;
+}

@@ -1,14 +1,16 @@
 ---
-
 layout: page
 title: Colophon
 permalink: /colophon/
 subtitle: A note left behind by the one who filled the box.
 handwritten: written on the inside of the cover, in a different hand
 description: >-
-A final note from Loki, left inside the RESTLESS SOUL archive.
+  A final note from Loki, left inside the RESTLESS SOUL archive.
+poem: true
+title_in_body: true
+---
 
-COLOPHON
+# COLOPHON
 
 This archive was never meant to become a book.
 
@@ -55,13 +57,18 @@ So read carefully.
 ---
 
 AUTHOR
+{: .signature__label}
 
 Loki
+{: .signature__name}
 
 ---
 
 The archive remains open.
+{: .coda}
 
 The pages remain restless.
+{: .coda}
 
 Nothing here has been put to rest.
+{: .coda}

@@ -5,9 +5,10 @@ layout: default
 
   <header class="sheet__head">
     <p class="sheet__eyebrow meta">
-      {%- if page.archive_note -%}{{ page.archive_note }}{%- else -%}document{%- endif -%}
+      {%- if page.archive_note -%}{{ page.archive_note }}{%- else -%}box no. {{ site.data.site.archive_box }} &middot; a note left behind{%- endif -%}
     </p>
-    <h1 class="sheet__title">{{ page.title }}</h1>
+    {%- comment -%} A page may carry its heading in the body instead, so the note is not printed twice. {%- endcomment -%}
+    {%- unless page.title_in_body %}<h1 class="sheet__title">{{ page.title }}</h1>{%- endunless %}
     {%- if page.subtitle %}
     <p class="sheet__subtitle">{{ page.subtitle }}</p>
     {%- endif %}

@@ -25,4 +25,4 @@ main:
   - key: "04"
     title: "colophon"
     url: "/colophon/"
-    note: "how this box was assembled"
+    note: "the note inside the cover"
