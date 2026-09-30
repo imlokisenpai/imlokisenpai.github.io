@@ -15,6 +15,13 @@ author:
   # Deliberately not attributed. The archive does not name who wrote it.
   email:
 
+# --- Where it lives ------------------------------------------------
+# GitHub Pages serves a project site from a subdirectory, so every internal
+# URL has to carry the repository name. Without these two lines the
+# stylesheet resolves to github.io/assets/... and the site arrives unstyled.
+url: "https://imlokisenpai.github.io"
+baseurl: "/restless-soul"
+
 # --- Build -------------------------------------------------------
 # Pinned so the site builds identically on a laptop in any timezone and in
 # the UTC container GitHub Actions uses. Without this, a post written at
