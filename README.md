@@ -31,10 +31,35 @@ with the file and line.
 
 ## Add a writing
 
+**Actions → new writing → Run workflow.** Fill in the form.
+
+Two fields are required: a title and a shelf. Everything else is optional —
+leave the date blank and it files today (UTC), leave the excerpt blank and
+the first paragraph is used, leave the writing blank and you get an empty
+document with an edit link. Status, tags and poem mode are switches.
+
+It writes `_posts/<date>-<slug>.md`, commits it, and publishes. The front
+matter is generated rather than pasted, so it cannot come out malformed,
+and it refuses a duplicate filename, a title with no usable characters, or a
+date that is not a real date.
+
+From a terminal:
+
+```sh
+gh workflow run new-writing.yml \
+  -f title="The Chair" -f shelf=grief \
+  -f status=UNFINISHED -f tags="rooms, the kept" -f poem=true
+```
+
+Or edit a document in place at any time — the form is only a shortcut.
+
+### By hand
+
 Create one file in `_posts/`, named `YYYY-MM-DD-a-short-slug.md`. That is the
 whole process — the catalogue, the archive numbers, the shelves, the keyword
 index, the excerpt, the RSS feed and the previous/next links all follow from
-it.
+it. `title` and `category` are the only two keys the archive actually needs;
+`date` belongs in the filename.
 
 ```yaml
 ---
