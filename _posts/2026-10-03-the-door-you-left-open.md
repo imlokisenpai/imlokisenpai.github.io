@@ -6,7 +6,7 @@ status: "REFLECTION"
 excerpt: "those who dared to give someone a place within their beating chest."
 tags: ["Love","brave","betrayal"]
 poem: true
-note:"To love is to leave the door open,
+note: "To love is to leave the door open,
 knowing someone may enter
 with the key to your wounds."
 ---
