@@ -5,6 +5,7 @@ category: "existential"
 excerpt: "Sometimes I ask myself,\nwhy do I even write?"
 tags: ["Abyss","dark"]
 poem: true
+note: "who am I? if the real me is in my writing? maybe just an illusion i created to satisfy others"
 ---
 
 Sometimes I ask myself,
