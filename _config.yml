@@ -20,7 +20,7 @@ author:
 # URL has to carry the repository name. Without these two lines the
 # stylesheet resolves to github.io/assets/... and the site arrives unstyled.
 url: "https://imlokisenpai.github.io"
-baseurl: "/restless-soul"
+baseurl: "/"
 
 # --- Build -------------------------------------------------------
 # Pinned so the site builds identically on a laptop in any timezone and in
