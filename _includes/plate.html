@@ -1,0 +1,70 @@
+{%- comment -%}
+  One plate. Called in a loop from _pages/elsewhere.html, which may be
+  filling the page from _data/plates.yml or straight from the folder, so
+  this include accepts either shape:
+
+    plate.src      — from _data/plates.yml
+    plate.caption  — from _data/plates.yml, optional
+    plate.place    — from _data/plates.yml, optional
+    plate.when     — from _data/plates.yml, optional
+
+    plate.path     — a static file, when the folder is being listed
+    plate.name     — a static file, unused unless there is a caption
+
+  plate-num is the printed number.
+
+  Liquid treats an empty string as true, so every optional field is
+  normalised to "" first and then compared against "" — otherwise an
+  empty caption leaves an empty <span> behind.
+{%- endcomment -%}
+
+{%- assign num = include.plate-num -%}
+{%- assign src = include.plate.src | default: include.plate.path -%}
+{%- assign caption = include.plate.caption | append: "" | normalize_whitespace | strip -%}
+{%- assign place = include.plate.place | append: "" | strip -%}
+{%- assign when = include.plate.when | append: "" | strip -%}
+
+{%- assign has_caption = false -%}
+{%- assign has_where = false -%}
+{%- if caption != "" -%}{%- assign has_caption = true -%}{%- endif -%}
+{%- if place != "" -%}{%- assign has_where = true -%}{%- endif -%}
+{%- if when != "" -%}{%- assign has_where = true -%}{%- endif -%}
+
+{%- comment -%}
+  A caption is one line of Markdown. markdownify wraps it in a <p> of its
+  own, which is dropped again so the caption sits inside the existing
+  <figcaption> without a paragraph of its own. It is also the alt text,
+  so it is written for someone who cannot see the photograph.
+{%- endcomment -%}
+{%- if has_caption -%}
+  {%- assign cap = caption | markdownify | strip | remove: "<p>" | remove: "</p>" | strip -%}
+{%- endif -%}
+{%- comment -%} The alt text is the caption without its markup, read out
+rather than seen. {%- endcomment -%}
+{%- if has_caption -%}
+  {%- assign alt = caption | markdownify | strip_html | normalize_whitespace | strip -%}
+{%- else -%}
+  {%- assign alt = "Plate " | append: num -%}
+{%- endif -%}
+
+<li class="plate" role="listitem">
+  <figure class="plate__figure">
+
+    <a class="plate__link" href="{{ src | relative_url }}" data-plate>
+      <img class="plate__img"
+           src="{{ src | relative_url }}"
+           alt="{{ alt | escape }}"
+           loading="lazy"
+           decoding="async">
+    </a>
+
+    <figcaption class="plate__caption">
+      <span class="plate__no meta">plate {{ num }}</span>
+      {%- if has_caption %}<span class="plate__text">{{ cap }}</span>{% endif %}
+      {%- if has_where %}
+      <span class="plate__where meta">{% if place != "" %}{{ place }}{% endif %}{% if place != "" and when != "" %} &middot; {% endif %}{% if when != "" %}{{ when }}{% endif %}</span>
+      {%- endif %}
+    </figcaption>
+
+  </figure>
+</li>

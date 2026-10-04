@@ -1,0 +1,118 @@
+---
+layout: default
+title: Elsewhere
+permalink: /elsewhere/
+description: >-
+  Photographs from elsewhere — the places the box travelled to, and what
+  was left of them. Numbered as plates, in no particular order.
+---
+
+{%- comment -%}
+  Two ways to fill this page, and the second is optional.
+
+  1. Put the file in assets/img/plates/ and commit. Every image in that
+     folder is listed here, in filename order. Name it 01-, 02-, 03- and
+     the order is the order they were taken. Nothing else to edit.
+
+  2. Add an entry to _data/plates.yml and it is used instead of the
+     folder listing. That is how a photograph gets a caption, a place or
+     a date. Only the entries listed there appear, in the order written.
+
+  Both are plain files. There is no gallery to configure and no image
+  processing: what is committed is what is published, so a photograph
+  should be resized before it is committed (see the README).
+{%- endcomment -%}
+
+{%- assign listed = site.data.plates -%}
+
+{%- comment -%}
+  The folder listing is filtered by hand rather than in one where_exp
+  because Liquid's condition parser will not take parentheses, and the
+  allowlist has to be an allowlist: a .DS_Store or a stray README dropped
+  in the folder must not become a plate. Note it is `extname`, not
+  `extension`, that a static file answers to, and that it carries the
+  leading dot.
+{%- endcomment -%}
+{%- assign in_folder = site.static_files | where_exp: "f", "f.path contains 'assets/img/plates/'" -%}
+
+{%- assign filed = 0 -%}
+{%- for file in in_folder -%}
+  {%- assign ext = file.extname | downcase | remove: "." -%}
+  {%- if ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'webp' -%}
+    {%- assign filed = filed | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if listed and listed.size > 0 -%}
+  {%- assign source = "listed" -%}
+  {%- assign total = listed.size -%}
+{%- elsif filed > 0 -%}
+  {%- assign source = "folder" -%}
+  {%- assign total = filed -%}
+{%- else -%}
+  {%- assign source = "empty" -%}
+  {%- assign total = 0 -%}
+{%- endif -%}
+
+<header class="shelf">
+  <p class="shelf__eyebrow meta">plates &middot; box no. {{ site.data.site.archive_box }} &middot; {% if source == "empty" %}none filed{% else %}{{ total }} {% if total == 1 %}plate{% else %}plates{% endif %}{% endif %}</p>
+
+  <h1 class="shelf__title">{{ page.title }}</h1>
+
+  <p class="shelf__note handwritten">Some things were written about. A few were only seen.</p>
+
+  {%- if source == "empty" %}
+  <p class="shelf__how meta">
+    Nothing has been filed here yet. Drop a photograph into
+    <span class="nowrap">assets/img/plates/</span> and it appears, numbered
+    in the order it was taken.
+  </p>
+  {%- elsif source == "listed" %}
+  <p class="shelf__how meta">
+    Numbered in the order they are listed. Each caption is written in
+    <span class="nowrap">_data/plates.yml</span>.
+  </p>
+  {%- else %}
+  <p class="shelf__how meta">
+    Listed from the folder, in filename order. Prefix a file with a number
+    and a dash to fix its place.
+  </p>
+  {%- endif %}
+</header>
+
+{%- if source == "empty" %}
+
+<div class="plates__empty">
+  <p class="plates__empty-mark handwritten">no plates filed</p>
+  <p class="plates__empty-note meta">the folder is empty. it is not an oversight.</p>
+</div>
+
+{%- else %}
+
+{%- comment -%}
+  A list, not a grid of cards. Each plate is break-inside: avoid so a
+  photograph is never cut across a column, and the columns are sized in
+  rem so the page needs no breakpoints of its own.
+{%- endcomment -%}
+<ol class="plates" role="list" data-plates>
+  {%- if source == "listed" -%}
+    {%- for plate in listed -%}
+      {%- assign num = forloop.index -%}
+      {%- if num < 10 -%}{%- assign num = "0" | append: num -%}{%- endif -%}
+      {%- include plate.html plate=plate plate-num=num -%}
+    {%- endfor -%}
+  {%- else -%}
+    {%- assign n = 0 -%}
+    {%- for file in in_folder -%}
+      {%- assign ext = file.extname | downcase | remove: "." -%}
+      {%- if ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'webp' -%}
+        {%- assign n = n | plus: 1 -%}
+        {%- assign num = n -%}
+        {%- if num < 10 -%}{%- assign num = "0" | append: num -%}{%- endif -%}
+        {%- include plate.html plate=file plate-num=num -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+</ol>
+
+{%- endif -%}

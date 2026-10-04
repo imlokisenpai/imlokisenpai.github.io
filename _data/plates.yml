@@ -1,0 +1,34 @@
+# Photographs for /elsewhere/.
+#
+# This file is optional. Leave it empty and every image in
+# assets/img/plates/ is listed in filename order. Fill it in and only the
+# photographs listed here appear, in the order they are written here —
+# which is how a photograph gets words under it.
+#
+# Four keys, three of them optional:
+#
+#   src:     assets/img/plates/01-rome.jpg   (required, the path in the repo)
+#   caption: one line of Markdown. It becomes the alt text too, so write
+#            it for someone who cannot see the photograph.
+#   place:   where it was taken
+#   when:    when — a year, a season, whatever you remember
+#
+# Example, three entries:
+#
+# - src: assets/img/plates/01-rome-kitchen.jpg
+#   caption: The window in the flat, early morning.
+#   place: Rome
+#   when: autumn 2024
+#
+# - src: assets/img/plates/02-train-window.jpg
+#   caption: Nothing for an hour but this.
+#   when: 2025
+#
+# - src: assets/img/plates/03-sea.jpg
+#   caption: >
+#     A line I could not write.
+#
+# Before committing a photograph: resize the long edge to about 1600px and
+# save it as a progressive JPEG around 300–500KB. Strip the location data —
+# a phone photo carries the exact spot it was taken, and this is a public
+# site.

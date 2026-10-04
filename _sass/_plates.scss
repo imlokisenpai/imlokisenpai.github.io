@@ -1,0 +1,194 @@
+/* ==========================================================================
+   plates — the photographs
+   The box is a paper thing, so photographs are mounted the way prints are
+   mounted in an album: a mat, a hairline edge, a number and a line of
+   words underneath. Nothing rounded, nothing floating, no gallery chrome.
+   The photographs are the only colour in the archive, so they are held
+   slightly back from full saturation until a reader goes looking.
+   ========================================================================== */
+
+/* -- the wall ----------------------------------------------------------- */
+/* Sized in rem rather than breakpoints: the browser decides how many
+   columns fit, so the page needs no rules of its own at any width. */
+.plates {
+  column-width: 17rem;
+  column-gap: clamp(1.25rem, 3vw, 2rem);
+  margin-top: 2.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.plate {
+  break-inside: avoid;
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+/* -- one plate ----------------------------------------------------------- */
+.plate__figure { margin: 0; }
+
+.plate__link {
+  display: block;
+  position: relative;
+  padding: 0.5rem;
+  background:
+    linear-gradient(180deg, rgba(216, 204, 178, 0.035), transparent 70%),
+    var(--charcoal);
+  border: 1px solid var(--edge);
+  box-shadow: 0 12px 28px -26px rgba(0, 0, 0, 0.9);
+  transition: border-color var(--quick) var(--ease), transform var(--quick) var(--ease);
+}
+
+.plate__link::after {
+  /* the same fibre the archive's own plates carry */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--fibre);
+  background-size: 220px 220px;
+  opacity: 0.045;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.plate__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--charcoal-2);
+  filter: saturate(0.9) contrast(1.02) brightness(0.98);
+  transition: filter var(--slow) var(--ease);
+}
+
+.plate__link:hover,
+.plate__link:focus-visible {
+  border-color: var(--brown);
+  transform: translateY(-1px);
+}
+
+.plate__link:hover .plate__img,
+.plate__link:focus-visible .plate__img {
+  filter: saturate(1) contrast(1) brightness(1);
+}
+
+.plate__link:focus-visible {
+  outline: 2px solid var(--ivory);
+  outline-offset: 3px;
+}
+
+/* -- caption ------------------------------------------------------------- */
+.plate__caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.7rem;
+  padding: 0.75rem 0.15rem 0;
+}
+
+.plate__no {
+  color: var(--brown-text);
+  letter-spacing: 0.18em;
+  transition: color var(--quick) var(--ease);
+}
+
+.plate__link:hover ~ .plate__caption .plate__no,
+.plate__link:focus-visible ~ .plate__caption .plate__no { color: var(--crimson-lit); }
+
+.plate__text {
+  flex: 1 1 12rem;
+  min-width: 0;
+  font-size: 0.9375rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--ink-70);
+}
+
+.plate__where {
+  flex-basis: 100%;
+  letter-spacing: 0.12em;
+  color: var(--ink-45);
+}
+
+/* -- nothing filed yet --------------------------------------------------- */
+.plates__empty {
+  margin-top: 2.5rem;
+  padding: clamp(2.5rem, 8vw, 4.5rem) 1.5rem;
+  border: 1px dashed var(--brown-dim);
+  text-align: center;
+}
+
+.plates__empty-mark {
+  font-size: 1.125rem;
+  color: var(--ink-70);
+}
+
+.plates__empty-note {
+  margin-top: 0.75rem;
+  color: var(--ink-45);
+}
+
+/* -- lightbox ------------------------------------------------------------ */
+/* The <a> points at the full photograph, so without this file the plate
+   opens the image itself and nothing is lost. */
+.plateview {
+  width: min(92vw, 72rem);
+  max-height: 88vh;
+  padding: 0;
+  border: 1px solid var(--edge);
+  background: var(--void);
+  color: var(--parchment);
+  box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.95);
+}
+
+.plateview::backdrop {
+  background: rgba(6, 5, 5, 0.93);
+}
+
+.plateview__frame {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 0.85rem;
+}
+
+.plateview__img {
+  display: block;
+  max-width: 100%;
+  max-height: 74vh;
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  background: var(--charcoal-2);
+}
+
+.plateview__caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.35rem 0.7rem;
+  text-align: center;
+}
+
+.plateview__close {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.5rem;
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-45);
+  background: none;
+  border: 0;
+  padding: 0.35rem 0.5rem;
+  cursor: pointer;
+  transition: color var(--quick) var(--ease);
+}
+
+.plateview__close:hover,
+.plateview__close:focus-visible { color: var(--ivory); }
+
+.plateview__close:focus-visible {
+  outline: 2px solid var(--ivory);
+  outline-offset: 2px;
+}

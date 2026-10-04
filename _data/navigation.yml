@@ -23,6 +23,11 @@ main:
     note: "loose keywords, not taxonomy"
 
   - key: "04"
+    title: "elsewhere"
+    url: "/elsewhere/"
+    note: "what the eyes kept"
+
+  - key: "05"
     title: "colophon"
     url: "/colophon/"
     note: "the note inside the cover"

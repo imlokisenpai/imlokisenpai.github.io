@@ -145,6 +145,44 @@ with the key to your wounds."   # -> one line. All three lines become one.
 Use `|-` instead. The form does this for you: type the note into the `note`
 box, line breaks and all, and the workflow writes it as a `|-` block.
 
+## Add a photograph
+
+`/elsewhere/` is the photographs. There is nothing to configure.
+
+**To add one, drop the file into `assets/img/plates/` and commit.** Every
+`.jpg`, `.jpeg`, `.png` or `.webp` in that folder is listed on the page,
+numbered in filename order. Name the file `01-`, `02-`, `03-` and the order
+is the order they were taken. That is the whole procedure.
+
+To put words under a photograph, add it to `_data/plates.yml` as well:
+
+```yaml
+- src: assets/img/plates/01-rome-kitchen.jpg
+  caption: The window in the flat, early morning.
+  place: Rome
+  when: autumn 2024
+```
+
+`caption` is one line of Markdown and it becomes the alt text, so write it
+for someone who cannot see the photograph. `place` and `when` are optional
+and print on a second line in the small mono type. **Once that file lists
+anything, it is the only thing shown** — the folder is not consulted again,
+so keep the list complete.
+
+Two things worth doing to a photograph before committing it:
+
+- **Resize it.** Long edge about 1600px, progressive JPEG, roughly
+  300–500KB. Pages serves the file you commit, with no resizing and no
+  thumbnails, and it loads every one of them on the page.
+- **Strip the location data.** A phone photograph carries the exact spot it
+  was taken, in the file, and this is a public site. Most phones can be told
+  not to save it; if the file already has it, strip it before committing.
+
+The photographs are the only colour in the archive, so they are mounted
+rather than displayed: a hairline mat, a number, a caption, and slightly
+held-back saturation until a reader goes looking. Clicking one opens it full
+size; without JavaScript the link simply opens the image.
+
 ## How the numbering works
 
 `ARCHIVE 000` is not written anywhere. It is derived from the order of the
@@ -185,14 +223,15 @@ hand.
 ## Layout of the repository
 
 ```
-_data/           shelf names and notes, navigation, the hero line
-_includes/       seal, catalogue row, archive number, previous/next, chrome
+_data/           shelf names and notes, navigation, the hero line, plates
+_includes/       seal, catalogue row, archive number, one plate, chrome
 _layouts/        default, page, post, shelf
 _pages/          the standalone pages (opted in via `include:` in _config.yml)
   category/      one file per shelf
 _posts/          the writings themselves
 _sass/           one partial per area; assets/css/main.scss just @use's them
-assets/          the stylesheet entry point, one script, the favicon
+assets/          the stylesheet entry point, scripts, the favicon
+  img/plates/    drop a photograph here and it appears on /elsewhere/
 .github/         the workflow that builds and deploys
 ```
 
@@ -200,9 +239,12 @@ assets/          the stylesheet entry point, one script, the favicon
 
 Four gems, all of which GitHub Pages itself uses: `jekyll`, `jekyll-feed`,
 `jekyll-seo-tag`, `jekyll-sitemap`. There is no JavaScript framework, no web
-font, no analytics and no third-party request. The only script is
-`assets/js/archive.js`, which filters the catalogue; the site is fully
-readable without it.
+font, no analytics and no third-party request.
+
+Two scripts, both enhancements rather than requirements.
+`assets/js/archive.js` filters the catalogue and `assets/js/plates.js` opens
+a photograph full size; every plate is an ordinary link to the image, so the
+site is complete without either file.
 
 ## Editing the design
 
