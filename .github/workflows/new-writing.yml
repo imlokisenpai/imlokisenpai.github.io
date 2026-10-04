@@ -133,110 +133,128 @@ jobs:
 
           # A quoted heredoc, not -e '...': bash does no substitution at all,
           # so an apostrophe in a comment cannot close the program.
-          ruby -rjson -ryaml - \
-            "$TITLE" \
-            "$SHELF" \
-            "$day" \
-            "$STATUS" \
-            "$TAGS_IN" \
-            "$EXCERPT" \
-            "$NOTE" \
-            "$POEM" \
-            "$BODY" \
-            "$file" <<'RUBY'
-
-          # JSON is valid YAML, so a JSON-quoted scalar is the safest way
-          # to write a title and other text fields. Colons, apostrophes,
+          # The generator is written to a file and vetted with `ruby -c` before it is
+          # allowed to run. Piping it in through a heredoc used to hide syntax errors
+          # inside it until the step died, which looks like the form being broken
+          # rather than a typo in here.
+          cat > "$RUNNER_TEMP/generate.rb" <<'RUBY'
+          # JSON is valid YAML, so a JSON-quoted scalar is the safest way to
+          # write a title and other text fields. Colons, apostrophes,
           # quotation marks and non-latin characters all survive a round trip.
           title, shelf, day, status, tags, excerpt, note, poem, body, path = ARGV
-
-          # Anything typed into a form can arrive as curly quotes, an
-          # em dash or an accented letter. Ruby reads ENV as binary unless
-          # the runner's locale says otherwise, and json refuses binary —
-          # so retag and scrub everything before it is written.
-          utf8 = ->(s) {
-            s.to_s.dup.force_encoding(Encoding::UTF_8).scrub
-          }
-
+          
+          # Anything typed into a form can arrive as curly quotes, an em dash
+          # or an accented letter. Ruby reads ENV as binary unless the
+          # runner's locale says otherwise, and json refuses binary — so
+          # retag and scrub everything before it is written. Line endings are
+          # normalised at the same time: a stray carriage return inside a
+          # block of text is invisible until YAML decides what to do with it.
+          utf8 = ->(s) { s.to_s.dup.force_encoding(Encoding::UTF_8).scrub.gsub(/\r\n?/, "\n") }
+          
           title   = utf8.(title)
           status  = utf8.(status)
           excerpt = utf8.(excerpt)
           note    = utf8.(note)
           body    = utf8.(body)
           tags    = utf8.(tags)
-
+          
           # Belt and braces: the shell has already checked this, but a
           # malformed date line is the one thing that would quietly break
           # every downstream date calculation.
           raise "date is not YYYY-MM-DD" unless day =~ /\A\d{4}-\d{2}-\d{2}\z/
-
+          
+          # An author's note is a piece of Markdown written by hand, and the
+          # line breaks in it are part of what is being said. A double-quoted
+          # scalar cannot carry them: YAML folds a line break inside quotes
+          # into a single space, so three typed lines arrive as one run-on
+          # sentence. A literal block keeps every line exactly as written and
+          # stays readable in the file afterwards.
+          def block(key, value)
+            return nil if value.strip.empty?
+            lines = value.rstrip.split("\n", -1)
+            # A leading space or tab would need an explicit indentation
+            # indicator, and a tab is not legal indentation at all. Both are
+            # vanishingly rare, so quote the value rather than guess.
+            if lines.any? { |l| l.start_with?(" ", "\t") }
+              return ["#{key}: #{value.to_json}"]
+            end
+            ["#{key}: |-"] + lines.map { |l| l.empty? ? "" : "  #{l}" }
+          end
+          
           out = ["---"]
-
+          
           out << "title: #{title.to_json}"
           out << "date: #{day} 09:00:00 +0000"
           out << "category: #{shelf.to_json}"
-
+          
           out << "status: #{status.to_json}" unless status.strip.empty?
-
+          
           out << "excerpt: #{excerpt.to_json}" unless excerpt.strip.empty?
-
-          out << "note: #{note.to_json}" unless note.strip.empty?
-
+          
+          out.concat(block("note", note) || [])
+          
           words = tags
             .split(",")
             .map(&:strip)
             .reject(&:empty?)
             .uniq
-
+          
           out << "tags: #{words.to_json}" unless words.empty?
-
+          
           out << "poem: true" if poem == "true"
-
+          
           out << "---"
           out << ""
-
-          out << (
-            body.strip.empty?
-              ? "<!-- paste the writing here -->"
-              : body.rstrip
-          )
-
+          
+          out << (body.strip.empty? ? "<!-- paste the writing here -->" : body.rstrip)
+          
           File.write(path, out.join("\n") + "\n")
-
-          # Verify the generated file.
+          
+          # Verify the generated file: the front matter has to parse, and every
+          # value has to have survived the round trip unchanged.
           written = File.read(path, encoding: "UTF-8")
-
+          
           raise "front matter is not closed" unless
             written.start_with?("---\n") &&
             written.split(/^---\s*$/).length >= 3
-
-          fm = YAML.unsafe_load(
-            written.split(/^---\s*$/)[1]
-          )
-
+          
+          fm = YAML.unsafe_load(written.split(/^---\s*$/)[1])
+          
           raise "title did not parse" unless
             fm["title"].is_a?(String) &&
             !fm["title"].empty?
-
+          
           raise "title was altered" unless
             fm["title"] == title
-
+          
           raise "date did not parse" unless
             fm["date"]
-
+          
           raise "category did not parse" unless
             fm["category"] == shelf
-
+          
           raise "tags did not parse" unless
             fm["tags"].nil? ||
             fm["tags"].is_a?(Array)
-
-          raise "note did not parse" unless
-            fm["note"].nil? ||
-            fm["note"].is_a?(String)
-
+          
+          # The note is the one field where a silent fold would be invisible,
+          # so compare the shape of it and not only the words: a note that came
+          # back as one long line has lost the author's line breaks.
+          unless note.strip.empty?
+            raise "note did not parse" unless fm["note"].is_a?(String)
+            if fm["note"].lines.size != note.rstrip.lines.size
+              raise "note lost a line break"
+            end
+          end
+          
           puts "front matter ok: #{fm.keys.join(", ")}"
           RUBY
+          
+          ruby -c "$RUNNER_TEMP/generate.rb" >/dev/null ||
+            fail "The generator script itself does not compile."
+          
+          ruby -rjson -ryaml "$RUNNER_TEMP/generate.rb" \
+            "$TITLE" "$SHELF" "$day" "$STATUS" "$TAGS_IN" "$EXCERPT" "$NOTE" "$POEM" "$BODY" "$file"
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

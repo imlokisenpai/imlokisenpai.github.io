@@ -179,7 +179,24 @@
   color: var(--ink-70);
 }
 
-.authornote__body p + p { margin-top: 1em; }
+/* The note is the archive speaking, not the writing, so its colour and
+   size are pinned here: several shelves restyle .prose as a whole, and a
+   note that changed its ink depending on which shelf it was filed under
+   would read as part of the piece rather than beside it. */
+.authornote .authornote__body,
+.authornote .authornote__body p {
+  color: var(--ink-70);
+  font-size: 0.925rem;
+}
+
+.authornote .authornote__body p { margin-bottom: 0; }
+
+/* A note written with line breaks but no blank line is verse, exactly
+   as it would be in the body of a poem. */
+.authornote__body--lines p {
+  white-space: pre-wrap;
+  text-wrap: initial;
+}
 
 /* -- previous / next ----------------------------------------------------- */
 .docnav {

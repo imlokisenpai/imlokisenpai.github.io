@@ -72,14 +72,29 @@ layout: default
   </div>
 
   {%- if page.note %}
+  {%- comment -%}
+    A note is written in the same hand as the writing, so it goes through
+    markdown like everything else.
+
+    A note with line breaks in it needs those breaks kept. HTML treats a
+    newline inside a paragraph as a space, so three typed lines arrive as
+    one run-on sentence. Liquid has no escape for a newline inside a
+    string, which means `contains "\n"` silently never matches; turning
+    the breaks into <br /> first gives something that can be searched for
+    with ordinary text. One <br /> is line breaks the author meant, two in
+    a row is a stanza break and normal spacing applies.
+  {%- endcomment -%}
+  {%- assign note_breaks = page.note | newline_to_br | strip_newlines -%}
+  {%- assign note_lines = false -%}
+  {%- if note_breaks contains "<br />" -%}
+    {%- unless note_breaks contains "<br /><br />" -%}
+      {%- assign note_lines = true -%}
+    {%- endunless -%}
+  {%- endif -%}
   <aside class="authornote">
     <h2 class="authornote__label meta">author&rsquo;s note</h2>
-    <div class="authornote__body prose">
-      {%- if page.note contains "\n\n" -%}
-        {{ page.note | markdownify }}
-      {%- else -%}
-        <p>{{ page.note | strip_html }}</p>
-      {%- endif -%}
+    <div class="authornote__body prose{% if note_lines %} authornote__body--lines{% endif %}">
+      {{ page.note | markdownify }}
     </div>
   </aside>
   {%- endif %}

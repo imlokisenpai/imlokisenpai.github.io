@@ -38,6 +38,10 @@ leave the date blank and it files today (UTC), leave the excerpt blank and
 the first paragraph is used, leave the writing blank and you get an empty
 document with an edit link. Status, tags and poem mode are switches.
 
+The `note` box takes Markdown, and the line breaks you type in it are kept.
+It is written into the front matter as a `|-` block, which is the only form
+that can carry them — see [Author's notes](#authors-notes).
+
 It writes `_posts/<date>-<slug>.md`, commits it, and publishes. The front
 matter is generated rather than pasted, so it cannot come out malformed,
 and it refuses a duplicate filename, a title with no usable characters, or a
@@ -85,7 +89,7 @@ the body of the writing
 | `tags` | no | any words. They get an anchor on `/tags/` automatically |
 | `excerpt` | no | the catalogue line. The first paragraph is used if you leave it out |
 | `poem` | no | `true` keeps your line breaks and indentation. See below |
-| `note` | no | printed under the writing as **AUTHOR'S NOTE** |
+| `note` | no | printed under the writing as **AUTHOR'S NOTE**. See below |
 
 ### Poems
 
@@ -107,6 +111,39 @@ arranged by someone
 
 Leave `poem` off and the text is rendered as ordinary prose, where a single
 newline is just a space.
+
+### Author's notes
+
+`note` is a piece of Markdown printed under the writing, beside a rule and a
+small label. It is meant for the things a reader would not get from the piece
+itself: what it is really about, or what you left out on purpose.
+
+```
+---
+note: |-
+  A note with **bold**, *italic* and [a link](https://example.com).
+
+  A second paragraph, after a blank line.
+---
+```
+
+It works the way the poems do. Line breaks are kept as they were typed, a blank
+line is a paragraph break, and Markdown is rendered, so `**bold**` is bold.
+
+**Write it as a `|-` block.** This is the one piece of front matter where the
+obvious thing is quietly wrong: a note in double quotes spread over several
+lines comes out as one run-on sentence. YAML treats a line break inside quotes
+as a space — it is folding, not a newline — so the lines are lost before the
+page ever sees them:
+
+```yaml
+note: "To love is to leave the door open,
+knowing someone may enter
+with the key to your wounds."   # -> one line. All three lines become one.
+```
+
+Use `|-` instead. The form does this for you: type the note into the `note`
+box, line breaks and all, and the workflow writes it as a `|-` block.
 
 ## How the numbering works
 
