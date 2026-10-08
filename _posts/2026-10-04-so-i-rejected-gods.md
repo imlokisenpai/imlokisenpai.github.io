@@ -1,5 +1,5 @@
 ---
-title: "So I rejected gods"
+title: "So I rejected the gods"
 date: 2026-10-04 09:00:00 +0000
 category: "grief"
 status: "BURNT"
@@ -20,7 +20,7 @@ poem: true
 ---
 
 I wanted her to rest for eternity,
-so I rejected gods.
+so I rejected the gods.
 She was beautiful and kind,
 yet she suffered
 for caring too much,
@@ -37,5 +37,5 @@ a final silence,
 a rest they never gave her in life.
 Now they want her back,
 to wash their sins
-in the name of gods.
-So I rejected gods.
+in the name of the gods.
+So I rejected the gods.
